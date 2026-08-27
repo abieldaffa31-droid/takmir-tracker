@@ -12,6 +12,7 @@
     "db:migrate": "tsx src/db/migrate.ts",
     "db:seed": "tsx src/scripts/seed.ts",
     "db:rebuild-availability": "tsx src/scripts/rebuild-availability.ts",
+    "make-admin": "tsx src/scripts/promote-admin.ts",
     "test": "vitest run"
   },
   "dependencies": {

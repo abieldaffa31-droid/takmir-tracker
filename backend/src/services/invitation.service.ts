@@ -1,6 +1,9 @@
 import crypto from "node:crypto";
+import { eq } from "drizzle-orm";
 import { env } from "../config/env.js";
 import { logger } from "../lib/logger.js";
+import { db } from "../db/index.js";
+import { user } from "../db/schema/index.js";
 import { memberRepo } from "../repositories/member.repo.js";
 import { invitationRepo } from "../repositories/invitation.repo.js";
 import type { Actor } from "../lib/types.js";
@@ -39,12 +42,25 @@ export const invitationService = {
   // Dipanggil dari Better Auth databaseHooks.user.create.after — menautkan
   // baris `user` yang baru dibuat Better Auth ke baris `members` yang sudah
   // ada berdasarkan email, lalu menandai undangan pending sebagai diterima.
+  //
+  // Kalau member ini sebelumnya sudah tertaut ke akun `user` LAIN (mis. email
+  // anggota diganti, sehingga login berikutnya membuat akun baru), akun baru
+  // itu jadi akun aktifnya — dan role dari akun lama (admin/coordinator, dsb)
+  // dipindahkan juga, supaya ganti email tidak diam-diam menurunkan hak akses.
   async linkUserToMember(userId: string, email: string) {
     const member = await memberRepo.byEmail(email);
     if (!member) return;
-    if (!member.userId) {
+
+    if (member.userId && member.userId !== userId) {
+      const previousUser = await db.query.user.findFirst({ where: eq(user.id, member.userId) });
+      if (previousUser && previousUser.role !== "member") {
+        await db.update(user).set({ role: previousUser.role }).where(eq(user.id, userId));
+      }
+    }
+    if (member.userId !== userId) {
       await memberRepo.linkUser(member.id, userId);
     }
+
     const pending = await invitationRepo.latestPendingForEmail(email);
     if (pending) await invitationRepo.markAccepted(pending.id);
   },
