@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#E8E6FF;font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:#2438FF}a:hover{color:#1a29c9}
+    ::-webkit-scrollbar{width:0;height:0}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px 72px;box-sizing:border-box;gap:26px;background:radial-gradient(circle at 15% 0%,#FFF04A 0%,rgba(255,240,74,0) 42%),radial-gradient(circle at 90% 10%,#B9C0FF 0%,rgba(185,192,255,0) 45%),#E8E6FF">
+
+  <div style="width:100%;max-width:1180px;display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap">
+      <div style="font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:.95;color:#0B0F2B">TAKMIR<br>TRACKER</div>
+      <div style="display:flex;flex-direction:column;gap:6px;padding-bottom:4px">
+        <div style="align-self:flex-start;background:#FFF04A;border:2px solid #0B0F2B;border-radius:100px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.08em;transform:rotate(-2deg)">SIAPA BISA JAGA?</div>
+        <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">Masjid Pogung Raya · Ganjil 2026/2027 · data contoh</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <sc-for list="{{ screens }}" as="scr" hint-placeholder-count="13">
+        <button onClick="{{ scr.select }}" style="{{ scr.chipStyle }}">{{ scr.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- L01 -->
+  <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L01 · MASUK</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#2438FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.7)">9:41<span>●●●</span></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 26px;gap:24px">
+        <div style="font-size:46px;font-weight:700;line-height:.92;letter-spacing:-.03em;color:#fff">JAGA<br>MASJID<br><span style="color:#FFF04A">BARENG.</span></div>
+        <div style="font-size:15px;color:rgba(255,255,255,.75);line-height:1.45">Isi jadwalmu sekali, Memudahkan keberadaaanmu.</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <input placeholder="nama@email.com" style="padding:16px;border-radius:14px;border:3px solid #0B0F2B;background:#fff;font-size:15px;font-family:inherit;color:#0B0F2B">
+          <button style="padding:17px;border-radius:14px;border:3px solid #0B0F2B;background:#FFF04A;color:#0B0F2B;font-size:16px;font-weight:700;font-family:inherit;box-shadow:5px 5px 0 #0B0F2B">Kirim tautan masuk →</button>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.6)">tanpa password. tanpa ribet.</div>
+      </div>
+      <div style="display:flex;justify-content:center;padding:0 0 14px"><div style="width:110px;height:4px;border-radius:2px;background:rgba(255,255,255,.4)"></div></div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L02 -->
+  <sc-if value="{{ isOnboarding }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L02 · ONBOARDING 1/3</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="padding:18px 22px 0">
+        <div style="display:flex;gap:6px;margin-bottom:20px">
+          <div style="flex:1;height:8px;border-radius:100px;border:2px solid #0B0F2B;background:#FFF04A"></div>
+          <div style="flex:1;height:8px;border-radius:100px;border:2px solid #0B0F2B;background:#fff"></div>
+          <div style="flex:1;height:8px;border-radius:100px;border:2px solid #0B0F2B;background:#fff"></div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;color:#2438FF">LANGKAH 1 DARI 3</div>
+        <div style="font-size:32px;font-weight:700;letter-spacing:-.03em;line-height:1.02;color:#0B0F2B;margin-top:8px">Kapan kamu kuliah atau kerja?</div>
+        <div style="font-size:14px;color:#4a4f75;margin-top:10px;line-height:1.45">Yang rutin tiap pekan aja. Bisa diubah kapan pun.</div>
+      </div>
+      <div style="padding:22px;display:flex;flex-direction:column;gap:12px">
+        <button style="display:flex;align-items:center;gap:12px;padding:18px;border:3px solid #0B0F2B;border-radius:16px;background:#fff;font-size:16px;font-weight:600;color:#0B0F2B;text-align:left;font-family:inherit;box-shadow:4px 4px 0 #0B0F2B">
+          <span style="width:26px;height:26px;border-radius:50%;background:#2438FF;color:#fff;font-size:17px;line-height:26px;text-align:center;flex-shrink:0;font-weight:700">+</span>Tambah jadwal kuliah</button>
+        <button style="display:flex;align-items:center;gap:12px;padding:18px;border:3px solid #0B0F2B;border-radius:16px;background:#fff;font-size:16px;font-weight:600;color:#0B0F2B;text-align:left;font-family:inherit;box-shadow:4px 4px 0 #0B0F2B">
+          <span style="width:26px;height:26px;border-radius:50%;background:#FFF04A;color:#0B0F2B;font-size:17px;line-height:26px;text-align:center;flex-shrink:0;font-weight:700">+</span>Tambah shift kerja</button>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 30px">
+        <div style="border:2px dashed #b6bae0;border-radius:18px;padding:22px;text-align:center;font-size:13px;color:#8b90b5;line-height:1.5">Masih kosong.<br>Tambah satu, baru kelihatan hasilnya.</div>
+      </div>
+      <div style="padding:16px 22px 26px;display:flex;gap:10px;border-top:3px solid #0B0F2B;background:#fff">
+        <button style="flex:1;padding:16px;border-radius:14px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:15px;font-weight:600;font-family:inherit">Lewati</button>
+        <button style="flex:2;padding:16px;border-radius:14px;border:3px solid #0B0F2B;background:#2438FF;color:#fff;font-size:15px;font-weight:700;font-family:inherit;box-shadow:4px 4px 0 #0B0F2B">Lanjut →</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L04 -->
+  <sc-if value="{{ isGridDaily }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L04 · GRID HARIAN</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="padding:14px 18px 10px">
+        <div style="font-size:26px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B;line-height:1">Selasa</div>
+        <div style="font-family:'DM Mono',monospace;font-size:12px;color:#4a4f75;margin-top:4px">24/31 anggota udah ngisi</div>
+      </div>
+      <div style="display:flex;gap:6px;padding:0 18px 12px;overflow-x:auto">
+        <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+          <button style="{{ d.pillStyle }}">{{ d.short }}</button>
+        </sc-for>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:4px 18px 18px;display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ dailyBands }}" as="b" hint-placeholder-count="7">
+          <div onClick="{{ openSheet }}" style="border:3px solid #0B0F2B;border-radius:16px;padding:12px 14px;cursor:pointer;{{ b.cardStyle }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <div>
+                <div style="font-size:15px;font-weight:700;color:#0B0F2B">{{ b.label }}</div>
+                <div style="font-family:'DM Mono',monospace;font-size:11px;color:#4a4f75">{{ b.time }}</div>
+              </div>
+              <div style="display:flex;align-items:baseline;gap:4px">
+                <span style="font-size:26px;font-weight:700;letter-spacing:-.04em;color:#0B0F2B;font-variant-numeric:tabular-nums">{{ b.count }}</span>
+                <span style="font-family:'DM Mono',monospace;font-size:11px;color:#4a4f75">orang</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:3px;margin-top:10px">
+              <sc-for list="{{ b.pips }}" as="p" hint-placeholder-count="8">
+                <div style="flex:1;height:9px;border-radius:100px;border:1.5px solid #0B0F2B;{{ p.style }}"></div>
+              </sc-for>
+            </div>
+            <div style="{{ b.warnStyle }}">{{ b.warnLabel }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;border-top:3px solid #0B0F2B;background:#fff">
+        <sc-for list="{{ navKoordinator }}" as="n" hint-placeholder-count="4">
+          <div style="{{ n.style }}">{{ n.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L03 mingguan -->
+  <sc-if value="{{ isGridWeekly }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L03 · GRID MINGGUAN RINGKAS</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px">
+        <div style="font-size:26px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B">Grid Tim</div>
+        <div style="display:flex;border:2.5px solid #0B0F2B;border-radius:100px;overflow:hidden">
+          <div style="padding:6px 12px;background:#2438FF;color:#fff;font-size:12px;font-weight:700">Tim</div>
+          <div style="padding:6px 12px;background:#fff;color:#0B0F2B;font-size:12px;font-weight:600">Individu</div>
+        </div>
+      </div>
+      <div style="flex:1;overflow:auto;padding:0 14px">
+        <div style="border:3px solid #0B0F2B;border-radius:16px;overflow:hidden;background:#0B0F2B">
+          <div style="display:grid;grid-template-columns:62px repeat(7,1fr);gap:1.5px">
+            <div style="background:#0B0F2B"></div>
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div style="background:#0B0F2B;color:#fff;text-align:center;font-family:'DM Mono',monospace;font-size:10.5px;padding:6px 0">{{ d.short }}</div>
+            </sc-for>
+            <sc-for list="{{ weeklyBands }}" as="band" hint-placeholder-count="7">
+              <div style="background:#0B0F2B;color:#fff;font-size:9.5px;font-weight:600;display:flex;align-items:center;padding:0 4px;line-height:1.15">{{ band.label }}</div>
+              <sc-for list="{{ band.cells }}" as="cell" hint-placeholder-count="7">
+                <div style="height:44px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;{{ cell.style }}">{{ cell.value }}</div>
+              </sc-for>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;padding:12px 4px;font-family:'DM Mono',monospace;font-size:10.5px;color:#4a4f75">
+          <span style="width:12px;height:12px;background:#DDE2FF;border:1.5px solid #0B0F2B"></span>dikit
+          <span style="width:12px;height:12px;background:#8E9BFF;border:1.5px solid #0B0F2B;margin-left:6px"></span>sedang
+          <span style="width:12px;height:12px;background:#2438FF;border:1.5px solid #0B0F2B;margin-left:6px"></span>rame
+          <span style="width:12px;height:12px;background:#FFF04A;border:1.5px solid #0B0F2B;margin-left:6px"></span>gawat
+        </div>
+      </div>
+      <div style="display:flex;border-top:3px solid #0B0F2B;background:#fff">
+        <sc-for list="{{ navKoordinator }}" as="n" hint-placeholder-count="4">
+          <div style="{{ n.style }}">{{ n.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L05 sheet -->
+  <sc-if value="{{ isSheet }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L05 · SHEET DETAIL SLOT</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#2438FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column;position:relative">
+      <div style="padding:18px;opacity:.4">
+        <sc-for list="{{ dailyBands }}" as="b" hint-placeholder-count="7">
+          <div style="border:2px solid #0B0F2B;border-radius:12px;padding:8px 10px;margin-bottom:6px;background:#fff;font-size:12px;font-weight:600;color:#0B0F2B">{{ b.label }}</div>
+        </sc-for>
+      </div>
+      <div style="position:absolute;left:0;right:0;bottom:0;height:74%;background:#F7F6FF;border-top:3px solid #0B0F2B;border-radius:26px 26px 0 0;display:flex;flex-direction:column">
+        <div style="display:flex;justify-content:center;padding:10px 0 2px"><div style="width:44px;height:5px;border-radius:100px;background:#0B0F2B"></div></div>
+        <div style="padding:8px 20px 14px">
+          <div style="display:inline-block;background:#FFF04A;border:2px solid #0B0F2B;border-radius:100px;padding:3px 10px;font-family:'DM Mono',monospace;font-size:10.5px;transform:rotate(-1.5deg)">SELASA</div>
+          <div style="font-size:28px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B;margin-top:8px;line-height:1">Ba'da Ashar</div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:#4a4f75;margin-top:2px">15:00–17:40 · 6 bisa ditugaskan</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:0 20px 10px;display:flex;flex-direction:column;gap:8px">
+          <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF">BISA DITUGASKAN · 6</div>
+          <sc-for list="{{ candidatesReady }}" as="c" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:10px;border:2.5px solid #0B0F2B;border-radius:14px;padding:10px 12px;background:#fff">
+              <div style="width:32px;height:32px;border-radius:50%;border:2px solid #0B0F2B;background:#FFF04A;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0B0F2B;flex-shrink:0">{{ c.initials }}</div>
+              <div style="flex:1;font-size:14px;font-weight:600;color:#0B0F2B">{{ c.name }}</div>
+              <div style="{{ c.tagStyle }}">{{ c.tag }}</div>
+            </div>
+          </sc-for>
+          <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-top:6px">PERLU DIKONFIRMASI · 2</div>
+          <sc-for list="{{ candidatesMaybe }}" as="c" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;gap:10px;border:2.5px dashed #0B0F2B;border-radius:14px;padding:10px 12px;background:#fff">
+              <div style="width:32px;height:32px;border-radius:50%;border:2px solid #0B0F2B;background:#DDE2FF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0B0F2B;flex-shrink:0">{{ c.initials }}</div>
+              <div style="flex:1;font-size:14px;font-weight:600;color:#0B0F2B">{{ c.name }}</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:#4a4f75">{{ c.tag }}</div>
+            </div>
+          </sc-for>
+          <div style="display:flex;align-items:center;justify-content:space-between;border-top:2px dashed #b6bae0;margin-top:8px;padding-top:12px">
+            <span style="font-size:13px;font-weight:600;color:#4a4f75">Tidak bisa · 9</span>
+            <span style="font-family:'DM Mono',monospace;font-size:11px;color:#2438FF">buka ↓</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:14px 20px 20px;border-top:3px solid #0B0F2B;background:#fff">
+          <button style="flex:1;padding:15px;border-radius:14px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:14px;font-weight:600;font-family:inherit">Salin daftar</button>
+          <button style="flex:1;padding:15px;border-radius:14px;border:3px solid #0B0F2B;background:#FFF04A;color:#0B0F2B;font-size:14px;font-weight:700;font-family:inherit;box-shadow:4px 4px 0 #0B0F2B">Cari personel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L06 jadwal saya -->
+  <sc-if value="{{ isJadwalSaya }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L06 · JADWAL SAYA</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px">
+        <div>
+          <div style="font-size:26px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B;line-height:1">Jadwal Saya</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#4a4f75;margin-top:4px">3 aktivitas rutin · 18 blok luang</div>
+        </div>
+        <button onClick="{{ openForm }}" style="padding:9px 14px;border-radius:100px;border:3px solid #0B0F2B;background:#FFF04A;color:#0B0F2B;font-size:13px;font-weight:700;font-family:inherit;box-shadow:3px 3px 0 #0B0F2B">+ Tambah</button>
+      </div>
+      <div style="padding:0 14px">
+        <div style="border:3px solid #0B0F2B;border-radius:16px;overflow:hidden;background:#0B0F2B">
+          <div style="display:grid;grid-template-columns:58px repeat(7,1fr);gap:1.5px">
+            <div style="background:#0B0F2B"></div>
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div style="background:#0B0F2B;color:#fff;text-align:center;font-family:'DM Mono',monospace;font-size:10px;padding:5px 0">{{ d.short }}</div>
+            </sc-for>
+            <sc-for list="{{ individualBands }}" as="band" hint-placeholder-count="7">
+              <div style="background:#0B0F2B;color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;padding:0 4px;line-height:1.15">{{ band.label }}</div>
+              <sc-for list="{{ band.cells }}" as="cell" hint-placeholder-count="7">
+                <div style="height:36px;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;{{ cell.style }}">{{ cell.value }}</div>
+              </sc-for>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;padding:12px 2px;font-family:'DM Mono',monospace;font-size:10.5px;color:#4a4f75">
+          <span><span style="display:inline-block;width:11px;height:11px;background:#2438FF;border:1.5px solid #0B0F2B;margin-right:4px;vertical-align:-1px"></span>kuliah</span>
+          <span><span style="display:inline-block;width:11px;height:11px;background:#B14CFF;border:1.5px solid #0B0F2B;margin-right:4px;vertical-align:-1px"></span>kerja</span>
+          <span><span style="display:inline-block;width:11px;height:11px;background:#FFF04A;border:1.5px solid #0B0F2B;margin-right:4px;vertical-align:-1px"></span>amanah</span>
+          <span><span style="display:inline-block;width:11px;height:11px;background:#fff;border:1.5px solid #b6bae0;margin-right:4px;vertical-align:-1px"></span>luang</span>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:0 18px 16px;display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ activities }}" as="a" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:12px;border:3px solid #0B0F2B;border-radius:16px;padding:12px 14px;background:#fff">
+            <div style="width:10px;height:36px;border-radius:100px;border:2px solid #0B0F2B;{{ a.swatch }}"></div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:#0B0F2B">{{ a.title }}</div>
+              <div style="font-family:'DM Mono',monospace;font-size:11px;color:#4a4f75">{{ a.when }}</div>
+            </div>
+            <span style="font-size:18px;color:#0B0F2B">›</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;border-top:3px solid #0B0F2B;background:#fff">
+        <sc-for list="{{ navAnggota }}" as="n" hint-placeholder-count="3">
+          <div style="{{ n.style }}">{{ n.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L07 form -->
+  <sc-if value="{{ isFormAktivitas }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L07 · FORM AKTIVITAS</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="padding:14px 18px 14px;border-bottom:3px solid #0B0F2B">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#4a4f75">← kembali</div>
+        <div style="font-size:26px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B;margin-top:4px">Tambah kuliah</div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:16px">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:8px">JENIS</div>
+          <div style="display:flex;gap:8px">
+            <div style="flex:1;text-align:center;padding:11px;border-radius:100px;border:3px solid #0B0F2B;background:#2438FF;color:#fff;font-size:13px;font-weight:700">Kuliah</div>
+            <div style="flex:1;text-align:center;padding:11px;border-radius:100px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:13px;font-weight:600">Kerja</div>
+            <div style="flex:1;text-align:center;padding:11px;border-radius:100px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:13px;font-weight:600">Amanah</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:8px">NAMA MATA KULIAH</div>
+          <input value="Kalkulus II" style="width:100%;box-sizing:border-box;padding:14px;border-radius:14px;border:3px solid #0B0F2B;font-size:15px;font-family:inherit;color:#0B0F2B;background:#fff">
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:8px">HARI</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div style="{{ d.formChipStyle }}">{{ d.short }}</div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <div style="flex:1"><div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:8px">MULAI</div><input value="08:00" style="width:100%;box-sizing:border-box;padding:14px;border-radius:14px;border:3px solid #0B0F2B;font-size:15px;font-family:'DM Mono',monospace;color:#0B0F2B;background:#fff"></div>
+          <div style="flex:1"><div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:8px">SELESAI</div><input value="10:00" style="width:100%;box-sizing:border-box;padding:14px;border-radius:14px;border:3px solid #0B0F2B;font-size:15px;font-family:'DM Mono',monospace;color:#0B0F2B;background:#fff"></div>
+        </div>
+        <div style="border:3px solid #0B0F2B;border-radius:16px;background:#FFF04A;padding:14px">
+          <div style="font-size:14px;font-weight:700;color:#0B0F2B">Bentrok, nih.</div>
+          <div style="font-size:13px;color:#0B0F2B;margin-top:4px;line-height:1.45">Rabu 08:00–10:00 udah keisi "Fisika Dasar". Tetap bisa disimpan — keduanya akan ditandai.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;padding:14px 18px 22px;border-top:3px solid #0B0F2B;background:#fff">
+        <button style="flex:1;padding:16px;border-radius:14px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:14px;font-weight:600;font-family:inherit">Batal</button>
+        <button style="flex:2;padding:16px;border-radius:14px;border:3px solid #0B0F2B;background:#2438FF;color:#fff;font-size:15px;font-weight:700;font-family:inherit;box-shadow:4px 4px 0 #0B0F2B">Simpan jadwal</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L08 pengecualian -->
+  <sc-if value="{{ isPengecualian }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L08 · PENGECUALIAN</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="padding:14px 18px 14px;border-bottom:3px solid #0B0F2B">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#4a4f75">← kembali</div>
+        <div style="font-size:26px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B;margin-top:4px">Pengecualian</div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:16px">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:8px">TIPE</div>
+          <div style="display:flex;gap:8px">
+            <div style="flex:1;text-align:center;padding:11px;border-radius:100px;border:3px solid #0B0F2B;background:#B14CFF;color:#fff;font-size:13px;font-weight:700">Sakit</div>
+            <div style="flex:1;text-align:center;padding:11px;border-radius:100px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:13px;font-weight:600">Cuti</div>
+            <div style="flex:1;text-align:center;padding:11px;border-radius:100px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:13px;font-weight:600">Libur</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <div style="flex:1"><div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:8px">DARI</div><input value="27 Ags 2026" style="width:100%;box-sizing:border-box;padding:14px;border-radius:14px;border:3px solid #0B0F2B;font-size:14px;font-family:'DM Mono',monospace;color:#0B0F2B;background:#fff"></div>
+          <div style="flex:1"><div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:8px">SAMPAI</div><input value="29 Ags 2026" style="width:100%;box-sizing:border-box;padding:14px;border-radius:14px;border:3px solid #0B0F2B;font-size:14px;font-family:'DM Mono',monospace;color:#0B0F2B;background:#fff"></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;border:3px solid #0B0F2B;border-radius:16px;padding:14px;background:#fff">
+          <span style="font-size:15px;font-weight:700;color:#0B0F2B">Seharian penuh</span>
+          <div style="width:52px;height:30px;border-radius:100px;border:3px solid #0B0F2B;background:#2438FF;position:relative"><div style="width:20px;height:20px;border-radius:50%;background:#FFF04A;border:2px solid #0B0F2B;position:absolute;top:2px;right:2px"></div></div>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:8px">CATATAN (OPSIONAL)</div>
+          <textarea placeholder="contoh: rawat inap, balik Senin" style="width:100%;box-sizing:border-box;padding:14px;border-radius:14px;border:3px solid #0B0F2B;font-size:14px;font-family:inherit;color:#0B0F2B;height:84px;resize:none;background:#fff"></textarea>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;padding:14px 18px 22px;border-top:3px solid #0B0F2B;background:#fff">
+        <button style="flex:1;padding:16px;border-radius:14px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:14px;font-weight:600;font-family:inherit">Batal</button>
+        <button style="flex:2;padding:16px;border-radius:14px;border:3px solid #0B0F2B;background:#2438FF;color:#fff;font-size:15px;font-weight:700;font-family:inherit;box-shadow:4px 4px 0 #0B0F2B">Simpan</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L09 cari -->
+  <sc-if value="{{ isCari }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L09 · CARI PERSONEL</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="padding:14px 18px 6px;font-size:26px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B">Cari personel</div>
+      <div style="padding:8px 18px 16px;display:flex;flex-direction:column;gap:10px;border-bottom:3px solid #0B0F2B">
+        <div style="display:flex;gap:8px">
+          <div style="flex:1;border:3px solid #0B0F2B;border-radius:14px;padding:10px 12px;background:#fff"><div style="font-family:'DM Mono',monospace;font-size:10px;color:#4a4f75">HARI</div><div style="font-size:15px;font-weight:700;color:#0B0F2B">Sabtu</div></div>
+          <div style="flex:1;border:3px solid #0B0F2B;border-radius:14px;padding:10px 12px;background:#fff"><div style="font-family:'DM Mono',monospace;font-size:10px;color:#4a4f75">BUTUH</div><div style="font-size:15px;font-weight:700;color:#0B0F2B;font-variant-numeric:tabular-nums">3 orang</div></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1;border:3px solid #0B0F2B;border-radius:14px;padding:10px 12px;background:#fff"><div style="font-family:'DM Mono',monospace;font-size:10px;color:#4a4f75">MULAI</div><div style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;color:#0B0F2B">06:00</div></div>
+          <div style="flex:1;border:3px solid #0B0F2B;border-radius:14px;padding:10px 12px;background:#fff"><div style="font-family:'DM Mono',monospace;font-size:10px;color:#4a4f75">SELESAI</div><div style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;color:#0B0F2B">08:00</div></div>
+        </div>
+        <button style="padding:15px;border-radius:14px;border:3px solid #0B0F2B;background:#FFF04A;color:#0B0F2B;font-size:15px;font-weight:700;font-family:inherit;box-shadow:4px 4px 0 #0B0F2B">Cari sekarang</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF">BISA HADIR · 6</div>
+        <sc-for list="{{ candidatesReady }}" as="c" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:10px;border:2.5px solid #0B0F2B;border-radius:14px;padding:10px 12px;background:#fff">
+            <div style="width:32px;height:32px;border-radius:50%;border:2px solid #0B0F2B;background:#DDE2FF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0B0F2B;flex-shrink:0">{{ c.initials }}</div>
+            <div style="flex:1;font-size:14px;font-weight:600;color:#0B0F2B">{{ c.name }}</div>
+            <div style="{{ c.tagStyle }}">{{ c.tag }}</div>
+          </div>
+        </sc-for>
+        <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-top:8px">PERLU DIKONFIRMASI · 2</div>
+        <sc-for list="{{ candidatesMaybe }}" as="c" hint-placeholder-count="2">
+          <div style="display:flex;align-items:center;gap:10px;border:2.5px dashed #0B0F2B;border-radius:14px;padding:10px 12px;background:#fff">
+            <div style="width:32px;height:32px;border-radius:50%;border:2px solid #0B0F2B;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0B0F2B;flex-shrink:0">{{ c.initials }}</div>
+            <div style="flex:1;font-size:14px;font-weight:600;color:#0B0F2B">{{ c.name }}</div>
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:#4a4f75">{{ c.tag }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;border-top:3px solid #0B0F2B;background:#fff">
+        <sc-for list="{{ navKoordinatorCari }}" as="n" hint-placeholder-count="4">
+          <div style="{{ n.style }}">{{ n.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L10 anggota -->
+  <sc-if value="{{ isAnggotaList }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L10 · DAFTAR ANGGOTA</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px">
+        <div>
+          <div style="font-size:26px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B;line-height:1">Anggota</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#4a4f75;margin-top:4px">31 total · 7 belum ngisi</div>
+        </div>
+        <button style="padding:9px 14px;border-radius:100px;border:3px solid #0B0F2B;background:#FFF04A;color:#0B0F2B;font-size:13px;font-weight:700;font-family:inherit;box-shadow:3px 3px 0 #0B0F2B">+ Undang</button>
+      </div>
+      <div style="padding:0 18px 12px"><input placeholder="cari nama…" style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:100px;border:3px solid #0B0F2B;background:#fff;font-size:14px;font-family:inherit"></div>
+      <div style="flex:1;overflow-y:auto;padding:0 18px 16px;display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ members }}" as="m" hint-placeholder-count="6">
+          <div style="display:flex;align-items:center;gap:12px;border:3px solid #0B0F2B;border-radius:16px;padding:11px 13px;background:#fff">
+            <div style="width:38px;height:38px;border-radius:50%;border:2.5px solid #0B0F2B;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#0B0F2B;flex-shrink:0;{{ m.avatarStyle }}">{{ m.initials }}</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:#0B0F2B">{{ m.name }}</div>
+              <div style="font-family:'DM Mono',monospace;font-size:10.5px;color:#4a4f75">{{ m.role }}</div>
+            </div>
+            <div style="{{ m.tagStyle }}">{{ m.tagLabel }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;border-top:3px solid #0B0F2B;background:#fff">
+        <sc-for list="{{ navKoordinatorAnggota }}" as="n" hint-placeholder-count="4">
+          <div style="{{ n.style }}">{{ n.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L11 profil -->
+  <sc-if value="{{ isAnggotaProfil }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L11 · PROFIL ANGGOTA</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="background:#2438FF;border-bottom:3px solid #0B0F2B;padding:16px 18px 20px;margin-top:8px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.7)">← anggota</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-top:12px">
+          <div style="width:56px;height:56px;border-radius:50%;border:3px solid #0B0F2B;background:#FFF04A;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:700;color:#0B0F2B;flex-shrink:0">AF</div>
+          <div>
+            <div style="font-size:24px;font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1">Ahmad Fauzi</div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.75);margin-top:5px">anggota · ahmad.fauzi@email.com</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <div style="background:#fff;border:2px solid #0B0F2B;border-radius:100px;padding:4px 11px;font-size:11px;font-weight:700;color:#0B0F2B">Jadwal lengkap</div>
+          <div style="background:#FFF04A;border:2px solid #0B0F2B;border-radius:100px;padding:4px 11px;font-size:11px;font-weight:700;color:#0B0F2B">18 blok luang</div>
+        </div>
+      </div>
+      <div style="padding:14px 14px 0;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF">JADWAL INDIVIDU</div>
+      <div style="padding:10px 14px">
+        <div style="border:3px solid #0B0F2B;border-radius:16px;overflow:hidden;background:#0B0F2B">
+          <div style="display:grid;grid-template-columns:58px repeat(7,1fr);gap:1.5px">
+            <div style="background:#0B0F2B"></div>
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div style="background:#0B0F2B;color:#fff;text-align:center;font-family:'DM Mono',monospace;font-size:10px;padding:5px 0">{{ d.short }}</div>
+            </sc-for>
+            <sc-for list="{{ individualBands }}" as="band" hint-placeholder-count="7">
+              <div style="background:#0B0F2B;color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;padding:0 4px;line-height:1.15">{{ band.label }}</div>
+              <sc-for list="{{ band.cells }}" as="cell" hint-placeholder-count="7">
+                <div style="height:36px;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;{{ cell.style }}">{{ cell.value }}</div>
+              </sc-for>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;gap:10px;padding:14px 18px 22px;border-top:3px solid #0B0F2B;background:#fff">
+        <button style="flex:1;padding:15px;border-radius:14px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:14px;font-weight:600;font-family:inherit">Kirim pengingat</button>
+        <button style="flex:1;padding:15px;border-radius:14px;border:3px solid #0B0F2B;background:#2438FF;color:#fff;font-size:14px;font-weight:700;font-family:inherit;box-shadow:4px 4px 0 #0B0F2B">Tugaskan</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- L12 periode -->
+  <sc-if value="{{ isPeriode }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L12 · PENGATURAN PERIODE</div>
+    <div style="width:390px;height:800px;border:3px solid #0B0F2B;border-radius:34px;background:#F7F6FF;box-shadow:10px 10px 0 #0B0F2B;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;padding:14px 20px 0;font-family:'DM Mono',monospace;font-size:11px;color:#8b90b5">9:41<span>●●●</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px">
+        <div style="font-size:26px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B">Periode</div>
+        <button style="padding:9px 14px;border-radius:100px;border:3px solid #0B0F2B;background:#FFF04A;color:#0B0F2B;font-size:13px;font-weight:700;font-family:inherit;box-shadow:3px 3px 0 #0B0F2B">+ Buat baru</button>
+      </div>
+      <div style="padding:0 18px;display:flex;flex-direction:column;gap:12px">
+        <div style="border:3px solid #0B0F2B;border-radius:18px;background:#2438FF;padding:16px;box-shadow:5px 5px 0 #0B0F2B">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+            <div style="font-size:22px;font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.05">Ganjil<br>2026/2027</div>
+            <div style="background:#FFF04A;border:2px solid #0B0F2B;border-radius:100px;padding:4px 11px;font-size:11px;font-weight:700;color:#0B0F2B;transform:rotate(2deg);flex-shrink:0">AKTIF</div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:11.5px;color:rgba(255,255,255,.8);margin-top:10px">1 Ags – 31 Des 2026 · 31 anggota</div>
+          <button style="margin-top:14px;width:100%;padding:13px;border-radius:12px;border:3px solid #0B0F2B;background:#fff;color:#0B0F2B;font-size:13px;font-weight:700;font-family:inherit">Arsipkan periode</button>
+        </div>
+        <div style="border:3px solid #0B0F2B;border-radius:18px;background:#fff;padding:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:17px;font-weight:700;color:#0B0F2B">Genap 2025/2026</div>
+            <div style="border:2px solid #b6bae0;border-radius:100px;padding:3px 10px;font-family:'DM Mono',monospace;font-size:10px;color:#8b90b5">ARSIP</div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:11.5px;color:#4a4f75;margin-top:6px">1 Feb – 30 Jun 2026 · 28 anggota</div>
+        </div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;border-top:3px solid #0B0F2B;background:#fff">
+        <sc-for list="{{ navKoordinatorLain }}" as="n" hint-placeholder-count="4">
+          <div style="{{ n.style }}">{{ n.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- desktop -->
+  <sc-if value="{{ isGridDesktop }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:100%">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#3a3f66">L03 · GRID DESKTOP (≥1024px)</div>
+    <div style="width:1240px;flex-shrink:0;height:720px;border:3px solid #0B0F2B;border-radius:24px;background:#F7F6FF;box-shadow:12px 12px 0 #0B0F2B;overflow:hidden;display:flex">
+      <div style="width:230px;flex-shrink:0;background:#0B0F2B;padding:22px 0;display:flex;flex-direction:column;gap:4px">
+        <div style="padding:0 20px 24px;font-size:22px;font-weight:700;letter-spacing:-.03em;color:#fff;line-height:.95">TAKMIR<br>TRACKER</div>
+        <div style="margin:0 12px;padding:12px 14px;border-radius:12px;background:#FFF04A;color:#0B0F2B;font-size:14px;font-weight:700">Grid</div>
+        <div style="margin:0 12px;padding:12px 14px;border-radius:12px;color:rgba(255,255,255,.65);font-size:14px;font-weight:600">Cari</div>
+        <div style="margin:0 12px;padding:12px 14px;border-radius:12px;color:rgba(255,255,255,.65);font-size:14px;font-weight:600">Anggota</div>
+        <div style="margin:0 12px;padding:12px 14px;border-radius:12px;color:rgba(255,255,255,.65);font-size:14px;font-weight:600">Pengaturan</div>
+        <div style="flex:1"></div>
+        <div style="margin:0 12px;padding:12px 14px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.4)">keluar</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 26px;border-bottom:3px solid #0B0F2B">
+          <div>
+            <div style="font-size:28px;font-weight:700;letter-spacing:-.03em;color:#0B0F2B;line-height:1">Grid Tim</div>
+            <div style="font-family:'DM Mono',monospace;font-size:11.5px;color:#4a4f75;margin-top:4px">ganjil 2026/2027 · 31 anggota · 3 slot gawat</div>
+          </div>
+          <div style="display:flex;border:3px solid #0B0F2B;border-radius:100px;overflow:hidden">
+            <div style="padding:9px 18px;background:#2438FF;color:#fff;font-size:13px;font-weight:700">Tim</div>
+            <div style="padding:9px 18px;background:#fff;color:#0B0F2B;font-size:13px;font-weight:600">Individu</div>
+          </div>
+        </div>
+        <div style="flex:1;overflow:auto;padding:24px 26px">
+          <div style="border:3px solid #0B0F2B;border-radius:18px;overflow:hidden;background:#0B0F2B;max-width:860px">
+            <div style="display:grid;grid-template-columns:160px repeat(7,1fr);gap:2px">
+              <div style="background:#0B0F2B"></div>
+              <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+                <div style="background:#0B0F2B;color:#fff;text-align:center;font-family:'DM Mono',monospace;font-size:12px;padding:9px 0">{{ d.short }}</div>
+              </sc-for>
+              <sc-for list="{{ weeklyBands }}" as="band" hint-placeholder-count="7">
+                <div style="background:#0B0F2B;color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;padding:0 10px">{{ band.label }}</div>
+                <sc-for list="{{ band.cells }}" as="cell" hint-placeholder-count="7">
+                  <div style="height:56px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;{{ cell.style }}">{{ cell.value }}</div>
+                </sc-for>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width:272px;flex-shrink:0;border-left:3px solid #0B0F2B;padding:22px;display:flex;flex-direction:column;gap:20px;background:#fff">
+        <div style="font-size:16px;font-weight:700;color:#0B0F2B">Filter</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:10px">HARI</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div style="padding:6px 12px;border-radius:100px;border:2.5px solid #0B0F2B;background:#2438FF;color:#fff;font-size:12px;font-weight:700">{{ d.short }}</div>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#2438FF;margin-bottom:10px">AMBANG GAWAT</div>
+          <div style="border:3px solid #0B0F2B;border-radius:14px;padding:12px 14px;font-size:15px;font-weight:700;color:#0B0F2B">&lt; 2 orang</div>
+        </div>
+        <div style="border:3px solid #0B0F2B;border-radius:16px;background:#FFF04A;padding:14px">
+          <div style="font-size:14px;font-weight:700;color:#0B0F2B">3 slot gawat pekan ini</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#0B0F2B;margin-top:4px;line-height:1.5">dhuha sel · dhuha rab · dzuhur jum</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1300,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  state = { screen: 'grid-daily' };
+
+  screensMeta = [
+    ['login', 'L01 Masuk'],
+    ['onboarding', 'L02 Onboarding'],
+    ['grid-daily', 'L04 Grid Harian'],
+    ['grid-weekly', 'L03 Grid Mingguan'],
+    ['grid-desktop', 'L03 Desktop'],
+    ['sheet', 'L05 Sheet Detail'],
+    ['jadwal-saya', 'L06 Jadwal Saya'],
+    ['form-aktivitas', 'L07 Form Aktivitas'],
+    ['pengecualian', 'L08 Pengecualian'],
+    ['cari', 'L09 Cari Personel'],
+    ['anggota-list', 'L10 Daftar Anggota'],
+    ['anggota-profil', 'L11 Profil Anggota'],
+    ['periode', 'L12 Periode'],
+  ];
+
+  dayNames = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Ahd'];
+
+  bandDefs = [
+    { label: "Qabla Subuh", time: "04:00\u201304:40" },
+    { label: "Ba'da Subuh", time: "04:40\u201306:30" },
+    { label: "Dhuha", time: "06:30\u201311:00" },
+    { label: "Dzuhur", time: "11:00\u201314:00" },
+    { label: "Ba'da Ashar", time: "15:00\u201317:40" },
+    { label: "Ba'da Maghrib", time: "17:40\u201319:00" },
+    { label: "Ba'da Isya", time: "19:00\u201322:00" },
+  ];
+
+  qtyMatrix = [
+    [6, 7, 5, 6, 7, 9, 8],
+    [4, 5, 4, 5, 6, 10, 9],
+    [2, 1, 1, 2, 1, 4, 3],
+    [3, 2, 2, 3, 0, 6, 5],
+    [7, 6, 6, 7, 5, 10, 9],
+    [12, 11, 10, 12, 9, 14, 13],
+    [10, 9, 8, 10, 7, 12, 11],
+  ];
+
+  catMatrix = [
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', 'Amanah', ''],
+    ['Kuliah', 'Kuliah', 'Kuliah', 'Kuliah', '', '', ''],
+    ['Kerja', 'Kuliah', 'Kerja', 'Kuliah', '', '', ''],
+    ['', '', '', 'Kerja', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', 'Amanah', '', ''],
+  ];
+
+  catColors = {
+    Kuliah: { bg: '#2438FF', fg: '#fff' },
+    Kerja: { bg: '#B14CFF', fg: '#fff' },
+    Amanah: { bg: '#FFF04A', fg: '#0B0F2B' },
+  };
+
+  members = [
+    { name: 'Ahmad Fauzi', initials: 'AF', complete: true },
+    { name: 'Bilal Ramadhan', initials: 'BR', complete: true },
+    { name: 'Hasan Abdullah', initials: 'HA', complete: true },
+    { name: 'Umar Syarif', initials: 'US', complete: false },
+    { name: 'Zaid Maulana', initials: 'ZM', complete: true },
+    { name: 'Salim Taufik', initials: 'ST', complete: false },
+  ];
+
+  navSets = {
+    anggota: ['Jadwal Saya', 'Tim', 'Saya'],
+    koordinator: ['Grid', 'Cari', 'Anggota', 'Lainnya'],
+  };
+
+  cellStyle(v) {
+    let bg, color;
+    if (v === 0) { bg = 'repeating-linear-gradient(45deg,#FFF04A,#FFF04A 5px,#fff 5px,#fff 10px)'; color = '#0B0F2B'; }
+    else if (v < 2) { bg = '#FFF04A'; color = '#0B0F2B'; }
+    else if (v < 4) { bg = '#DDE2FF'; color = '#0B0F2B'; }
+    else if (v < 8) { bg = '#8E9BFF'; color = '#0B0F2B'; }
+    else if (v < 12) { bg = '#4759FF'; color = '#fff'; }
+    else { bg = '#2438FF'; color = '#fff'; }
+    return `background:${bg};color:${color};`;
+  }
+
+  nav(set, activeIndex) {
+    return this.navSets[set].map((label, i) => ({
+      label,
+      style: `flex:1;text-align:center;padding:14px 0 18px;font-size:12px;font-weight:${i === activeIndex ? 700 : 500};color:${i === activeIndex ? '#0B0F2B' : '#8b90b5'};border-top:${i === activeIndex ? '4px solid #FFF04A' : '4px solid transparent'};`,
+    }));
+  }
+
+  renderVals() {
+    const sel = this.state.screen;
+
+    const screens = this.screensMeta.map(([id, label]) => ({
+      id, label,
+      select: () => this.setState({ screen: id }),
+      chipStyle: `padding:8px 14px;border-radius:100px;border:2.5px solid #0B0F2B;background:${sel === id ? '#0B0F2B' : '#fff'};color:${sel === id ? '#FFF04A' : '#0B0F2B'};font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:${sel === id ? '3px 3px 0 #FFF04A' : 'none'};`,
+    }));
+
+    const days = this.dayNames.map((short, i) => ({
+      short,
+      pillStyle: `padding:9px 14px;border-radius:100px;border:2.5px solid #0B0F2B;background:${i === 1 ? '#2438FF' : '#fff'};color:${i === 1 ? '#fff' : '#0B0F2B'};font-size:13px;font-weight:700;font-family:inherit;flex-shrink:0;`,
+      formChipStyle: `padding:9px 13px;border-radius:100px;border:2.5px solid #0B0F2B;background:${(i === 0 || i === 2) ? '#2438FF' : '#fff'};color:${(i === 0 || i === 2) ? '#fff' : '#0B0F2B'};font-size:13px;font-weight:700;`,
+    }));
+
+    const weeklyBands = this.bandDefs.map((b, ri) => ({
+      label: b.label,
+      cells: this.qtyMatrix[ri].map(v => ({ value: v, style: this.cellStyle(v) })),
+    }));
+
+    const dailyBands = this.bandDefs.map((b, ri) => {
+      const v = this.qtyMatrix[ri][1];
+      const filled = Math.min(8, Math.round(v / 14 * 8));
+      const critical = v < 2;
+      return {
+        label: b.label, time: b.time, count: v,
+        cardStyle: `background:${critical ? '#FFF04A' : '#fff'};box-shadow:${critical ? '4px 4px 0 #0B0F2B' : 'none'};`,
+        pips: Array.from({ length: 8 }, (_, i) => ({
+          style: `background:${i < Math.max(1, filled) ? (critical ? '#0B0F2B' : '#2438FF') : 'transparent'};`,
+        })),
+        warnStyle: critical
+          ? "margin-top:8px;font-family:'DM Mono',monospace;font-size:10.5px;font-weight:500;color:#0B0F2B;"
+          : 'display:none;',
+        warnLabel: 'GAWAT \u2014 di bawah ambang 2 orang',
+      };
+    });
+
+    const individualBands = this.bandDefs.map((b, ri) => ({
+      label: b.label,
+      cells: this.catMatrix[ri].map(c => {
+        if (!c) return { value: '', style: 'background:#fff;' };
+        const col = this.catColors[c];
+        return { value: c.slice(0, 3).toLowerCase(), style: `background:${col.bg};color:${col.fg};` };
+      }),
+    }));
+
+    const members = this.members.map(m => ({
+      name: m.name, initials: m.initials, role: 'anggota',
+      avatarStyle: `background:${m.complete ? '#DDE2FF' : '#FFF04A'};`,
+      tagLabel: m.complete ? 'terisi' : 'belum ngisi',
+      tagStyle: `padding:4px 10px;border-radius:100px;border:2px solid #0B0F2B;font-family:'DM Mono',monospace;font-size:10px;background:${m.complete ? '#fff' : '#FFF04A'};color:#0B0F2B;flex-shrink:0;`,
+    }));
+
+    const tag = (label, hot) => `padding:4px 9px;border-radius:100px;border:2px solid #0B0F2B;font-family:'DM Mono',monospace;font-size:9.5px;background:${hot ? '#FFF04A' : '#fff'};color:#0B0F2B;flex-shrink:0;`;
+
+    return {
+      screens, days, weeklyBands, dailyBands, individualBands, members,
+      candidatesReady: [
+        { name: 'Ahmad F.', initials: 'AF', tag: 'preferred', tagStyle: tag('preferred', true) },
+        { name: 'Bilal R.', initials: 'BR', tag: 'luang', tagStyle: tag('luang', false) },
+        { name: 'Hasan A.', initials: 'HA', tag: 'luang', tagStyle: tag('luang', false) },
+        { name: 'Umar S.', initials: 'US', tag: 'belum ditinjau', tagStyle: tag('belum', true) },
+      ],
+      candidatesMaybe: [
+        { name: 'Zaid M.', initials: 'ZM', tag: 'amanah s.d. 15:15' },
+        { name: 'Salim T.', initials: 'ST', tag: 'jeda dari kampus' },
+      ],
+      activities: [
+        { title: 'Kalkulus II', when: 'sen & rab \u00b7 08:00\u201310:00', swatch: 'background:#2438FF;' },
+        { title: 'Kerja paruh waktu', when: 'sel & kam \u00b7 11:00\u201314:00', swatch: 'background:#B14CFF;' },
+        { title: 'Piket jaga masjid', when: "sab \u00b7 ba'da subuh", swatch: 'background:#FFF04A;' },
+      ],
+      navAnggota: this.nav('anggota', 0),
+      navKoordinator: this.nav('koordinator', 0),
+      navKoordinatorCari: this.nav('koordinator', 1),
+      navKoordinatorAnggota: this.nav('koordinator', 2),
+      navKoordinatorLain: this.nav('koordinator', 3),
+      isLogin: sel === 'login',
+      isOnboarding: sel === 'onboarding',
+      isGridDaily: sel === 'grid-daily',
+      isGridWeekly: sel === 'grid-weekly',
+      isGridDesktop: sel === 'grid-desktop',
+      isSheet: sel === 'sheet',
+      isJadwalSaya: sel === 'jadwal-saya',
+      isFormAktivitas: sel === 'form-aktivitas',
+      isPengecualian: sel === 'pengecualian',
+      isCari: sel === 'cari',
+      isAnggotaList: sel === 'anggota-list',
+      isAnggotaProfil: sel === 'anggota-profil',
+      isPeriode: sel === 'periode',
+      openSheet: () => this.setState({ screen: 'sheet' }),
+      openForm: () => this.setState({ screen: 'form-aktivitas' }),
+    };
+  }
+}
+</script>
+</body>
+</html>

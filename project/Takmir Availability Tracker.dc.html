@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#EBE7DC;font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:#C98A16}a:hover{color:#a86f10}
+    ::-webkit-scrollbar{width:0;height:0}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px 72px;box-sizing:border-box;gap:28px">
+
+  <div style="width:100%;max-width:1160px;display:flex;flex-direction:column;gap:14px">
+    <div>
+      <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8a6a2e">Takmir Availability Tracker &mdash; UI Mockups</div>
+      <div style="font-size:13px;color:#6b6656;margin-top:2px">Data contoh &middot; Masjid Al-Ikhlas &middot; Periode Ganjil 2026/2027</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <sc-for list="{{ screens }}" as="scr" hint-placeholder-count="13">
+        <button onClick="{{ scr.select }}" style="{{ scr.chipStyle }}">{{ scr.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- L01 Masuk -->
+  <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L01 &middot; Masuk &middot; Semua peran</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#F7F4EE;padding:0 32px;gap:22px">
+        <div style="width:64px;height:64px;border-radius:50% 50% 50% 4px;background:#16233D"></div>
+        <div style="text-align:center">
+          <div style="font-size:18px;font-weight:700;color:#16233D">Takmir Availability Tracker</div>
+          <div style="font-size:13px;color:#9a9484;margin-top:4px">Masjid Al-Ikhlas</div>
+        </div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:10px;margin-top:12px">
+          <input placeholder="nama@email.com" style="width:100%;box-sizing:border-box;padding:14px;border-radius:8px;border:1px solid #E3DED4;background:#fff;font-size:14px;font-family:inherit;color:#16233D"/>
+          <button style="padding:14px;border-radius:8px;border:none;background:#16233D;color:#fff;font-size:15px;font-weight:600;font-family:inherit">Kirim tautan masuk</button>
+        </div>
+        <div style="font-size:12px;color:#9a9484;text-align:center">Tautan masuk akan dikirim ke email Anda. Tanpa kata sandi.</div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L02 Onboarding -->
+  <sc-if value="{{ isOnboarding }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L02 &middot; Onboarding wizard (langkah 1 dari 3) &middot; Anggota</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="padding:20px 20px 0">
+          <div style="display:flex;gap:6px;margin-bottom:18px">
+            <div style="width:28px;height:5px;border-radius:3px;background:#C98A16"></div>
+            <div style="width:28px;height:5px;border-radius:3px;background:#E3DED4"></div>
+            <div style="width:28px;height:5px;border-radius:3px;background:#E3DED4"></div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:#8a6a2e;margin-bottom:6px">LANGKAH 1 DARI 3</div>
+          <div style="font-size:20px;font-weight:700;color:#16233D;line-height:1.3">Kapan Anda kuliah atau kerja?</div>
+          <div style="font-size:14px;color:#5b5647;margin-top:6px;line-height:1.4">Cukup yang rutin tiap pekan. Anda bisa mengubahnya nanti.</div>
+        </div>
+        <div style="padding:20px;display:flex;flex-direction:column;gap:10px">
+          <button style="display:flex;align-items:center;gap:10px;padding:16px;border:1px solid #E3DED4;border-radius:8px;background:#fff;font-size:15px;font-weight:600;color:#16233D;text-align:left;font-family:inherit">
+            <span style="width:20px;height:20px;border-radius:50%;background:#F0EBDE;color:#8a6a2e;font-size:16px;line-height:20px;text-align:center;flex-shrink:0">+</span>
+            Tambah jadwal kuliah
+          </button>
+          <button style="display:flex;align-items:center;gap:10px;padding:16px;border:1px solid #E3DED4;border-radius:8px;background:#fff;font-size:15px;font-weight:600;color:#16233D;text-align:left;font-family:inherit">
+            <span style="width:20px;height:20px;border-radius:50%;background:#F0EBDE;color:#8a6a2e;font-size:16px;line-height:20px;text-align:center;flex-shrink:0">+</span>
+            Tambah shift kerja
+          </button>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;color:#9a9484;font-size:13px">Belum ada yang ditambahkan</div>
+        <div style="padding:16px 20px 28px;display:flex;gap:10px;border-top:1px solid #E3DED4">
+          <button style="flex:1;padding:14px;border-radius:8px;border:1px solid #E3DED4;background:#fff;color:#5b5647;font-size:15px;font-weight:600;font-family:inherit">Lewati</button>
+          <button style="flex:2;padding:14px;border-radius:8px;border:none;background:#16233D;color:#fff;font-size:15px;font-weight:600;font-family:inherit">Lanjut &rarr;</button>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L04 Grid Harian -->
+  <sc-if value="{{ isGridDaily }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L04 &middot; Grid Tim &mdash; Harian (default mobile) &middot; Semua peran</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="display:flex;align-items:center;gap:2px;padding:12px 8px;border-bottom:1px solid #E3DED4;overflow-x:auto">
+          <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+            <button style="{{ d.pickerStyle }}">{{ d.short }}</button>
+          </sc-for>
+        </div>
+        <div style="padding:10px 16px;font-size:13px;color:#5b5647;border-bottom:1px solid #E3DED4">
+          <strong style="color:#16233D">Selasa</strong> &middot; 24 dari 31 anggota terisi
+        </div>
+        <div style="flex:1;overflow-y:auto">
+          <sc-for list="{{ dailyBands }}" as="b" hint-placeholder-count="7">
+            <div onClick="{{ openSheet }}" style="display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid #E3DED4;cursor:pointer;{{ b.criticalBorder }}">
+              <div style="width:110px;flex-shrink:0">
+                <div style="font-size:13px;font-weight:600;color:#16233D">{{ b.label }}</div>
+                <div style="font-size:11px;color:#9a9484;font-variant-numeric:tabular-nums">{{ b.time }}</div>
+              </div>
+              <div style="flex:1;height:16px;background:#EFEBE0;border-radius:3px;overflow:hidden">
+                <div style="height:100%;border-radius:3px;{{ b.barStyle }}"></div>
+              </div>
+              <div style="width:66px;text-align:right;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#16233D">{{ b.countLabel }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L03 Grid Mingguan Ringkas -->
+  <sc-if value="{{ isGridWeekly }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L03 &middot; Grid Tim &mdash; Mingguan ringkas (mode tim) &middot; Koordinator</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px">
+          <div style="font-size:16px;font-weight:700;color:#16233D">Grid Tim</div>
+          <div style="display:flex;background:#EFEBE0;border-radius:6px;padding:2px">
+            <div style="padding:5px 10px;border-radius:5px;background:#16233D;color:#fff;font-size:12px;font-weight:600">Tim</div>
+            <div style="padding:5px 10px;border-radius:5px;color:#5b5647;font-size:12px;font-weight:600">Individu</div>
+          </div>
+        </div>
+        <div style="flex:1;overflow:auto;padding:0 8px 8px">
+          <div style="display:grid;grid-template-columns:64px repeat(7,1fr);gap:2px">
+            <div></div>
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div style="text-align:center;font-size:11px;font-weight:600;color:#9a9484;padding:4px 0">{{ d.short }}</div>
+            </sc-for>
+            <sc-for list="{{ weeklyBands }}" as="band" hint-placeholder-count="7">
+              <div style="font-size:10.5px;font-weight:600;color:#16233D;display:flex;align-items:center;padding-right:4px;line-height:1.2">{{ band.label }}</div>
+              <sc-for list="{{ band.cells }}" as="cell" hint-placeholder-count="7">
+                <div style="height:38px;border-radius:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;{{ cell.style }}">{{ cell.value }}</div>
+              </sc-for>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid #E3DED4;font-size:11px;color:#9a9484">
+          <span style="display:inline-flex;width:10px;height:10px;background:#DCEEE6;border-radius:2px"></span>Sedikit
+          <span style="display:inline-flex;width:10px;height:10px;background:#5FB891;border-radius:2px;margin-left:6px"></span>Sedang
+          <span style="display:inline-flex;width:10px;height:10px;background:#1F6F52;border-radius:2px;margin-left:6px"></span>Banyak
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L05 Sheet detail slot -->
+  <sc-if value="{{ isSheet }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L05 &middot; Sheet detail slot &middot; Koordinator</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;position:relative;background:#F7F4EE;overflow:hidden">
+        <div style="padding:16px;opacity:.35">
+          <div style="font-size:13px;font-weight:600;color:#16233D;margin-bottom:10px">Selasa &middot; 24 dari 31 terisi</div>
+          <sc-for list="{{ dailyBands }}" as="b" hint-placeholder-count="7">
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #E3DED4">
+              <div style="width:90px;font-size:12px;font-weight:600;color:#16233D">{{ b.label }}</div>
+              <div style="flex:1;height:12px;background:#EFEBE0;border-radius:3px"><div style="height:100%;border-radius:3px;{{ b.barStyle }}"></div></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:20px 20px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.15);height:72%;display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:center;padding:10px 0 4px"><div style="width:36px;height:4px;border-radius:2px;background:#E3DED4"></div></div>
+          <div style="padding:4px 20px 12px;border-bottom:1px solid #E3DED4">
+            <div style="font-size:15px;font-weight:700;color:#16233D">Selasa &middot; Ba'da Ashar</div>
+            <div style="font-size:12px;color:#9a9484;font-variant-numeric:tabular-nums">15:00&ndash;17:40</div>
+          </div>
+          <div style="flex:1;overflow-y:auto;padding:14px 20px">
+            <div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:8px">BISA DITUGASKAN &middot; 6</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">&#9733; Ahmad F.</span><span style="font-size:11px;color:#8a6a2e;font-weight:600">luang preferred</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">Bilal R.</span><span style="font-size:11px;color:#9a9484">luang</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">Hasan A.</span><span style="font-size:11px;color:#9a9484">luang</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">Umar S.</span><span style="font-size:11px;color:#B23A2E;font-weight:600">&#9888; belum ditinjau</span></div>
+            </div>
+            <div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:8px">PERLU DIKONFIRMASI &middot; 2</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">Zaid M.</span><span style="font-size:11px;color:#9a9484">amanah s.d. 15:15</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">Salim T.</span><span style="font-size:11px;color:#9a9484">jeda dari kampus</span></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid #E3DED4">
+              <span style="font-size:13px;font-weight:600;color:#5b5647">Tidak bisa &middot; 9</span>
+              <span style="font-size:12px;font-weight:600;color:#C98A16">buka</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:14px 20px;border-top:1px solid #E3DED4">
+            <button style="flex:1;padding:13px;border-radius:8px;border:1px solid #E3DED4;background:#fff;color:#16233D;font-size:14px;font-weight:600;font-family:inherit">Salin daftar</button>
+            <button style="flex:1;padding:13px;border-radius:8px;border:none;background:#16233D;color:#fff;font-size:14px;font-weight:600;font-family:inherit">Cari personel</button>
+          </div>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L06/L07 Jadwal Saya -->
+  <sc-if value="{{ isJadwalSaya }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L06 &middot; Jadwal Saya (mode individu) &middot; Anggota</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 16px 10px">
+          <div style="font-size:16px;font-weight:700;color:#16233D">Jadwal Saya</div>
+          <button onClick="{{ openForm }}" style="padding:6px 12px;border-radius:100px;border:none;background:#16233D;color:#fff;font-size:12px;font-weight:600;font-family:inherit">+ Tambah</button>
+        </div>
+        <div style="padding:0 12px">
+          <div style="display:grid;grid-template-columns:56px repeat(7,1fr);gap:2px">
+            <div></div>
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div style="text-align:center;font-size:10.5px;font-weight:600;color:#9a9484;padding:4px 0">{{ d.short }}</div>
+            </sc-for>
+            <sc-for list="{{ individualBands }}" as="band" hint-placeholder-count="7">
+              <div style="font-size:9.5px;font-weight:600;color:#16233D;display:flex;align-items:center;line-height:1.15">{{ band.label }}</div>
+              <sc-for list="{{ band.cells }}" as="cell" hint-placeholder-count="7">
+                <div style="height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;{{ cell.style }}">{{ cell.value }}</div>
+              </sc-for>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;padding:12px 4px;font-size:11px;color:#5b5647">
+            <span><span style="display:inline-block;width:9px;height:9px;background:oklch(90% .05 250);border-radius:2px;margin-right:4px"></span>Kuliah</span>
+            <span><span style="display:inline-block;width:9px;height:9px;background:oklch(90% .05 300);border-radius:2px;margin-right:4px"></span>Kerja</span>
+            <span><span style="display:inline-block;width:9px;height:9px;background:oklch(90% .05 40);border-radius:2px;margin-right:4px"></span>Amanah</span>
+            <span><span style="display:inline-block;width:9px;height:9px;border:1px dashed #E3DED4;border-radius:2px;margin-right:4px"></span>Luang</span>
+          </div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:6px 16px 16px;display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:12px;font-weight:600;color:#5b5647;margin-top:8px">AKTIVITAS SAYA</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#fff;border:1px solid #E3DED4;border-radius:8px">
+            <div><div style="font-size:14px;font-weight:600;color:#16233D">Kalkulus II</div><div style="font-size:12px;color:#9a9484">Sen &amp; Rab &middot; 08:00&ndash;10:00</div></div>
+            <span style="color:#9a9484;font-size:16px">&rsaquo;</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#fff;border:1px solid #E3DED4;border-radius:8px">
+            <div><div style="font-size:14px;font-weight:600;color:#16233D">Kerja paruh waktu</div><div style="font-size:12px;color:#9a9484">Sel &amp; Kam &middot; 11:00&ndash;14:00</div></div>
+            <span style="color:#9a9484;font-size:16px">&rsaquo;</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#fff;border:1px solid #E3DED4;border-radius:8px">
+            <div><div style="font-size:14px;font-weight:600;color:#16233D">Piket jaga masjid</div><div style="font-size:12px;color:#9a9484">Sab &middot; Ba'da Subuh</div></div>
+            <span style="color:#9a9484;font-size:16px">&rsaquo;</span>
+          </div>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L07 Form aktivitas -->
+  <sc-if value="{{ isFormAktivitas }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L07 &middot; Form aktivitas &middot; Anggota</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="padding:16px;font-size:16px;font-weight:700;color:#16233D;border-bottom:1px solid #E3DED4">&larr; Tambah jadwal kuliah</div>
+        <div style="flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:6px">JENIS</div>
+            <div style="display:flex;background:#EFEBE0;border-radius:8px;padding:3px">
+              <div style="flex:1;text-align:center;padding:8px;border-radius:6px;background:#16233D;color:#fff;font-size:13px;font-weight:600">Kuliah</div>
+              <div style="flex:1;text-align:center;padding:8px;border-radius:6px;color:#5b5647;font-size:13px;font-weight:600">Kerja</div>
+              <div style="flex:1;text-align:center;padding:8px;border-radius:6px;color:#5b5647;font-size:13px;font-weight:600">Amanah</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:6px">NAMA MATA KULIAH</div>
+            <input value="Kalkulus II" style="width:100%;box-sizing:border-box;padding:12px;border-radius:8px;border:1px solid #E3DED4;font-size:14px;font-family:inherit;color:#16233D"/>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:6px">HARI</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+                <div style="{{ d.formChipStyle }}">{{ d.short }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:6px">JAM MULAI</div><input value="08:00" style="width:100%;box-sizing:border-box;padding:12px;border-radius:8px;border:1px solid #E3DED4;font-size:14px;font-family:inherit;font-variant-numeric:tabular-nums;color:#16233D"/></div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:6px">JAM SELESAI</div><input value="10:00" style="width:100%;box-sizing:border-box;padding:12px;border-radius:8px;border:1px solid #E3DED4;font-size:14px;font-family:inherit;font-variant-numeric:tabular-nums;color:#16233D"/></div>
+          </div>
+          <div style="background:#FBEDEA;border-left:3px solid #B23A2E;border-radius:6px;padding:12px 14px">
+            <div style="font-size:13px;font-weight:600;color:#8a2a20">Bertabrakan dengan jadwal lain</div>
+            <div style="font-size:12px;color:#8a2a20;margin-top:2px;line-height:1.4">Rabu 08:00&ndash;10:00 sudah terisi oleh "Fisika Dasar". Anda tetap bisa menyimpan &mdash; sistem akan menandai keduanya.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:14px 16px;border-top:1px solid #E3DED4">
+          <button style="flex:1;padding:14px;border-radius:8px;border:1px solid #E3DED4;background:#fff;color:#5b5647;font-size:14px;font-weight:600;font-family:inherit">Batal</button>
+          <button style="flex:2;padding:14px;border-radius:8px;border:none;background:#16233D;color:#fff;font-size:14px;font-weight:600;font-family:inherit">Simpan jadwal</button>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L08 Pengecualian -->
+  <sc-if value="{{ isPengecualian }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L08 &middot; Pengecualian &middot; Anggota</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="padding:16px;font-size:16px;font-weight:700;color:#16233D;border-bottom:1px solid #E3DED4">&larr; Tambah pengecualian</div>
+        <div style="flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:6px">TIPE</div>
+            <div style="display:flex;background:#EFEBE0;border-radius:8px;padding:3px">
+              <div style="flex:1;text-align:center;padding:8px;border-radius:6px;background:#16233D;color:#fff;font-size:13px;font-weight:600">Sakit</div>
+              <div style="flex:1;text-align:center;padding:8px;border-radius:6px;color:#5b5647;font-size:13px;font-weight:600">Cuti</div>
+              <div style="flex:1;text-align:center;padding:8px;border-radius:6px;color:#5b5647;font-size:13px;font-weight:600">Libur</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:6px">DARI TANGGAL</div><input value="27 Ags 2026" style="width:100%;box-sizing:border-box;padding:12px;border-radius:8px;border:1px solid #E3DED4;font-size:14px;font-family:inherit;color:#16233D"/></div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:6px">SAMPAI TANGGAL</div><input value="29 Ags 2026" style="width:100%;box-sizing:border-box;padding:12px;border-radius:8px;border:1px solid #E3DED4;font-size:14px;font-family:inherit;color:#16233D"/></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#fff;border:1px solid #E3DED4;border-radius:8px">
+            <span style="font-size:14px;color:#16233D;font-weight:600">Seharian penuh</span>
+            <div style="width:40px;height:24px;border-radius:100px;background:#16233D;position:relative"><div style="width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:3px;right:3px"></div></div>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:6px">CATATAN (OPSIONAL)</div>
+            <textarea placeholder="Contoh: rawat inap, kembali Senin" style="width:100%;box-sizing:border-box;padding:12px;border-radius:8px;border:1px solid #E3DED4;font-size:14px;font-family:inherit;color:#16233D;height:70px;resize:none"></textarea>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:14px 16px;border-top:1px solid #E3DED4">
+          <button style="flex:1;padding:14px;border-radius:8px;border:1px solid #E3DED4;background:#fff;color:#5b5647;font-size:14px;font-weight:600;font-family:inherit">Batal</button>
+          <button style="flex:2;padding:14px;border-radius:8px;border:none;background:#16233D;color:#fff;font-size:14px;font-weight:600;font-family:inherit">Simpan pengecualian</button>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L09 Cari personel -->
+  <sc-if value="{{ isCari }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L09 &middot; Cari personel &middot; Koordinator</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="padding:16px;font-size:16px;font-weight:700;color:#16233D">Cari personel</div>
+        <div style="padding:0 16px 14px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid #E3DED4">
+          <div style="display:flex;gap:10px">
+            <div style="flex:1"><div style="font-size:11px;font-weight:600;color:#5b5647;margin-bottom:5px">HARI</div><div style="padding:10px 12px;border:1px solid #E3DED4;border-radius:8px;background:#fff;font-size:13px;color:#16233D;font-weight:600">Sabtu</div></div>
+            <div style="flex:1"><div style="font-size:11px;font-weight:600;color:#5b5647;margin-bottom:5px">MINIMAL ORANG</div><div style="padding:10px 12px;border:1px solid #E3DED4;border-radius:8px;background:#fff;font-size:13px;color:#16233D;font-weight:600;font-variant-numeric:tabular-nums">3</div></div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <div style="flex:1"><div style="font-size:11px;font-weight:600;color:#5b5647;margin-bottom:5px">JAM MULAI</div><div style="padding:10px 12px;border:1px solid #E3DED4;border-radius:8px;background:#fff;font-size:13px;color:#16233D;font-weight:600;font-variant-numeric:tabular-nums">06:00</div></div>
+            <div style="flex:1"><div style="font-size:11px;font-weight:600;color:#5b5647;margin-bottom:5px">JAM SELESAI</div><div style="padding:10px 12px;border:1px solid #E3DED4;border-radius:8px;background:#fff;font-size:13px;color:#16233D;font-weight:600;font-variant-numeric:tabular-nums">08:00</div></div>
+          </div>
+          <button style="padding:12px;border-radius:8px;border:none;background:#16233D;color:#fff;font-size:14px;font-weight:600;font-family:inherit">Cari</button>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:16px">
+          <div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:8px">BISA HADIR &middot; 6</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">&#9733; Ahmad F.</span><span style="font-size:11px;color:#8a6a2e;font-weight:600">luang preferred</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">Bilal R.</span><span style="font-size:11px;color:#9a9484">luang</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">Hasan A.</span><span style="font-size:11px;color:#9a9484">luang</span></div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:#5b5647;margin-bottom:8px">PERLU DIKONFIRMASI &middot; 2</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;color:#16233D">Zaid M.</span><span style="font-size:11px;color:#9a9484">amanah s.d. 06:15</span></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid #E3DED4">
+            <span style="font-size:13px;font-weight:600;color:#5b5647">Tidak bisa &middot; 9</span>
+            <span style="font-size:12px;font-weight:600;color:#C98A16">buka</span>
+          </div>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L10 Daftar anggota -->
+  <sc-if value="{{ isAnggotaList }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L10 &middot; Daftar anggota &middot; Koordinator</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 16px 10px">
+          <div style="font-size:16px;font-weight:700;color:#16233D">Anggota &middot; 31</div>
+          <button style="padding:6px 12px;border-radius:100px;border:none;background:#16233D;color:#fff;font-size:12px;font-weight:600;font-family:inherit">+ Undang</button>
+        </div>
+        <div style="padding:0 16px 12px"><input placeholder="Cari nama&hellip;" style="width:100%;box-sizing:border-box;padding:10px 12px;border-radius:8px;border:1px solid #E3DED4;background:#fff;font-size:13px;font-family:inherit"/></div>
+        <div style="flex:1;overflow-y:auto">
+          <sc-for list="{{ members }}" as="m" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #E3DED4">
+              <div style="width:38px;height:38px;border-radius:50%;background:#16233D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0">{{ m.initials }}</div>
+              <div style="flex:1">
+                <div style="font-size:14px;font-weight:600;color:#16233D">{{ m.name }}</div>
+                <div style="font-size:12px;color:#9a9484">{{ m.role }}</div>
+              </div>
+              <div style="{{ m.tagStyle }}">{{ m.tagLabel }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L11 Profil anggota -->
+  <sc-if value="{{ isAnggotaProfil }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L11 &middot; Profil anggota &middot; Koordinator</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="padding:16px;font-size:15px;font-weight:700;color:#16233D;border-bottom:1px solid #E3DED4">&larr; Profil anggota</div>
+        <div style="padding:18px 16px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #E3DED4">
+          <div style="width:52px;height:52px;border-radius:50%;background:#16233D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;flex-shrink:0">AF</div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:#16233D">Ahmad Fauzi</div>
+            <div style="font-size:12px;color:#9a9484;margin-top:2px">Anggota &middot; ahmad.fauzi@email.com</div>
+          </div>
+        </div>
+        <div style="padding:14px 16px 0;font-size:12px;font-weight:600;color:#5b5647">JADWAL INDIVIDU</div>
+        <div style="padding:8px 10px">
+          <div style="display:grid;grid-template-columns:56px repeat(7,1fr);gap:2px">
+            <div></div>
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div style="text-align:center;font-size:10.5px;font-weight:600;color:#9a9484;padding:4px 0">{{ d.short }}</div>
+            </sc-for>
+            <sc-for list="{{ individualBands }}" as="band" hint-placeholder-count="7">
+              <div style="font-size:9.5px;font-weight:600;color:#16233D;display:flex;align-items:center;line-height:1.15">{{ band.label }}</div>
+              <sc-for list="{{ band.cells }}" as="cell" hint-placeholder-count="7">
+                <div style="height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;{{ cell.style }}">{{ cell.value }}</div>
+              </sc-for>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- L12 Pengaturan periode -->
+  <sc-if value="{{ isPeriode }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L12 &middot; Pengaturan periode &middot; Koordinator</div>
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+      <div style="height:100%;display:flex;flex-direction:column;background:#F7F4EE">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+          <div style="font-size:16px;font-weight:700;color:#16233D">Periode</div>
+          <button style="padding:6px 12px;border-radius:100px;border:none;background:#16233D;color:#fff;font-size:12px;font-weight:600;font-family:inherit">+ Buat baru</button>
+        </div>
+        <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px">
+          <div style="background:#fff;border:1px solid #E3DED4;border-radius:8px;padding:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:15px;font-weight:700;color:#16233D">Ganjil 2026/2027</div>
+              <div style="padding:3px 9px;border-radius:100px;background:#F0EBDE;color:#8a6a2e;font-size:11px;font-weight:700">AKTIF</div>
+            </div>
+            <div style="font-size:12px;color:#9a9484;margin-top:4px;font-variant-numeric:tabular-nums">1 Ags &ndash; 31 Des 2026</div>
+            <button style="margin-top:10px;width:100%;padding:10px;border-radius:8px;border:1px solid #E3DED4;background:#fff;color:#5b5647;font-size:13px;font-weight:600;font-family:inherit">Arsipkan periode</button>
+          </div>
+          <div style="background:#fff;border:1px solid #E3DED4;border-radius:8px;padding:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:15px;font-weight:700;color:#16233D">Genap 2025/2026</div>
+              <div style="padding:3px 9px;border-radius:100px;background:#EFEBE0;color:#9a9484;font-size:11px;font-weight:700">ARSIP</div>
+            </div>
+            <div style="font-size:12px;color:#9a9484;margin-top:4px;font-variant-numeric:tabular-nums">1 Feb &ndash; 30 Jun 2026</div>
+          </div>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <!-- Grid desktop (lg) -->
+  <sc-if value="{{ isGridDesktop }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:#16233D">L03 &middot; Grid Tim &mdash; Desktop (&#8805;1024px) &middot; Koordinator</div>
+    <x-import component-from-global-scope="ChromeWindow" from="./browser-window.jsx" width="1240" url="takmir.internal/grid" hint-size="1240,760">
+      <div style="height:100%;display:flex;background:#F7F4EE">
+        <div style="width:220px;flex-shrink:0;background:#16233D;padding:20px 0;display:flex;flex-direction:column;gap:2px">
+          <div style="padding:12px 20px 20px;font-size:14px;font-weight:700;color:#fff">Takmir Al-Ikhlas</div>
+          <div style="padding:11px 20px;border-left:3px solid #C98A16;background:rgba(255,255,255,.06);color:#fff;font-size:13px;font-weight:600">Grid</div>
+          <div style="padding:11px 20px 11px 23px;color:rgba(255,255,255,.6);font-size:13px;font-weight:600">Cari</div>
+          <div style="padding:11px 20px 11px 23px;color:rgba(255,255,255,.6);font-size:13px;font-weight:600">Anggota</div>
+          <div style="padding:11px 20px 11px 23px;color:rgba(255,255,255,.6);font-size:13px;font-weight:600">Pengaturan</div>
+          <div style="flex:1"></div>
+          <div style="padding:11px 20px 11px 23px;color:rgba(255,255,255,.4);font-size:13px;font-weight:600">Keluar</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid #E3DED4">
+            <div style="font-size:18px;font-weight:700;color:#16233D">Grid Tim &middot; Ganjil 2026/2027</div>
+            <div style="display:flex;background:#EFEBE0;border-radius:6px;padding:2px">
+              <div style="padding:6px 14px;border-radius:5px;background:#16233D;color:#fff;font-size:12.5px;font-weight:600">Tim</div>
+              <div style="padding:6px 14px;border-radius:5px;color:#5b5647;font-size:12.5px;font-weight:600">Individu</div>
+            </div>
+          </div>
+          <div style="flex:1;overflow:auto;padding:24px">
+            <div style="display:grid;grid-template-columns:150px repeat(7,1fr);gap:3px;max-width:820px">
+              <div></div>
+              <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+                <div style="text-align:center;font-size:12px;font-weight:600;color:#9a9484;padding:6px 0">{{ d.short }}</div>
+              </sc-for>
+              <sc-for list="{{ weeklyBands }}" as="band" hint-placeholder-count="7">
+                <div style="font-size:13px;font-weight:600;color:#16233D;display:flex;align-items:center;padding-right:8px">{{ band.label }}</div>
+                <sc-for list="{{ band.cells }}" as="cell" hint-placeholder-count="7">
+                  <div style="height:52px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;{{ cell.style }}">{{ cell.value }}</div>
+                </sc-for>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="width:260px;flex-shrink:0;border-left:1px solid #E3DED4;padding:20px;display:flex;flex-direction:column;gap:18px">
+          <div style="font-size:13px;font-weight:700;color:#16233D">Filter</div>
+          <div>
+            <div style="font-size:11px;font-weight:600;color:#5b5647;margin-bottom:8px">HARI</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+                <div style="padding:5px 10px;border-radius:100px;background:#16233D;color:#fff;font-size:11.5px;font-weight:600">{{ d.short }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;color:#5b5647;margin-bottom:8px">AMBANG KRITIS</div>
+            <div style="padding:10px 12px;border:1px solid #E3DED4;border-radius:8px;background:#fff;font-size:13px;color:#16233D;font-weight:600">&lt; 2 orang</div>
+          </div>
+        </div>
+      </div>
+    </x-import>
+  </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { screen: 'grid-daily' };
+
+  screensMeta = [
+    ['login', 'L01 Masuk'],
+    ['onboarding', 'L02 Onboarding'],
+    ['grid-daily', 'L04 Grid Harian'],
+    ['grid-weekly', 'L03 Grid Mingguan'],
+    ['grid-desktop', 'L03 Grid Desktop'],
+    ['sheet', 'L05 Sheet Detail'],
+    ['jadwal-saya', 'L06 Jadwal Saya'],
+    ['form-aktivitas', 'L07 Form Aktivitas'],
+    ['pengecualian', 'L08 Pengecualian'],
+    ['cari', 'L09 Cari Personel'],
+    ['anggota-list', 'L10 Daftar Anggota'],
+    ['anggota-profil', 'L11 Profil Anggota'],
+    ['periode', 'L12 Periode'],
+  ];
+
+  dayNames = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Ahd'];
+
+  bandDefs = [
+    { label: "Qabla Subuh", time: "04:00\u201304:40" },
+    { label: "Ba'da Subuh", time: "04:40\u201306:30" },
+    { label: "Dhuha", time: "06:30\u201311:00" },
+    { label: "Dzuhur", time: "11:00\u201314:00" },
+    { label: "Ba'da Ashar", time: "15:00\u201317:40" },
+    { label: "Ba'da Maghrib", time: "17:40\u201319:00" },
+    { label: "Ba'da Isya", time: "19:00\u201322:00" },
+  ];
+
+  qtyMatrix = [
+    [6, 7, 5, 6, 7, 9, 8],
+    [4, 5, 4, 5, 6, 10, 9],
+    [2, 1, 1, 2, 1, 4, 3],
+    [3, 2, 2, 3, 0, 6, 5],
+    [7, 6, 6, 7, 5, 10, 9],
+    [12, 11, 10, 12, 9, 14, 13],
+    [10, 9, 8, 10, 7, 12, 11],
+  ];
+
+  catMatrix = [
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', 'Amanah', ''],
+    ['Kuliah', 'Kuliah', 'Kuliah', 'Kuliah', '', '', ''],
+    ['Kerja', 'Kuliah', 'Kerja', 'Kuliah', '', '', ''],
+    ['', '', '', 'Kerja', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', 'Amanah', '', ''],
+  ];
+
+  catColors = {
+    Kuliah: { bg: 'oklch(90% .05 250)', fg: 'oklch(35% .12 250)' },
+    Kerja: { bg: 'oklch(90% .05 300)', fg: 'oklch(38% .12 300)' },
+    Amanah: { bg: 'oklch(90% .05 40)', fg: 'oklch(40% .13 40)' },
+  };
+
+  members = [
+    { name: 'Ahmad Fauzi', initials: 'AF', complete: true },
+    { name: 'Bilal Ramadhan', initials: 'BR', complete: true },
+    { name: 'Hasan Abdullah', initials: 'HA', complete: true },
+    { name: 'Umar Syarif', initials: 'US', complete: false },
+    { name: 'Zaid Maulana', initials: 'ZM', complete: true },
+    { name: 'Salim Taufik', initials: 'ST', complete: false },
+  ];
+
+  cellStyle(v) {
+    let bg, color;
+    if (v === 0) { bg = 'repeating-linear-gradient(45deg,#ffffff,#ffffff 4px,#EFEBE0 4px,#EFEBE0 8px)'; color = '#9a9484'; }
+    else if (v < 4) { bg = '#DCEEE6'; color = '#16233D'; }
+    else if (v < 8) { bg = '#A9D9C3'; color = '#16233D'; }
+    else if (v < 15) { bg = '#5FB891'; color = '#16233D'; }
+    else { bg = '#1F6F52'; color = '#fff'; }
+    const border = v < 2 ? 'border-left:2px solid #B23A2E;' : '';
+    return `background:${bg};color:${color};${border}`;
+  }
+
+  renderVals() {
+    const sel = this.state.screen;
+
+    const screens = this.screensMeta.map(([id, label]) => ({
+      id, label,
+      select: () => this.setState({ screen: id }),
+      chipStyle: `padding:7px 14px;border-radius:100px;border:1px solid ${sel === id ? '#16233D' : '#E3DED4'};background:${sel === id ? '#16233D' : '#fff'};color:${sel === id ? '#fff' : '#5b5647'};font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;`,
+    }));
+
+    const days = this.dayNames.map((short, i) => ({
+      short,
+      pickerStyle: `padding:8px 10px;border:none;background:none;font-size:13px;font-weight:600;color:${i === 1 ? '#16233D' : '#9a9484'};border-bottom:2px solid ${i === 1 ? '#C98A16' : 'transparent'};font-family:inherit;flex-shrink:0;`,
+      formChipStyle: `padding:8px 12px;border-radius:100px;border:1px solid ${(i === 0 || i === 2) ? '#16233D' : '#E3DED4'};background:${(i === 0 || i === 2) ? '#16233D' : '#fff'};color:${(i === 0 || i === 2) ? '#fff' : '#5b5647'};font-size:13px;font-weight:600;`,
+    }));
+
+    const weeklyBands = this.bandDefs.map((b, ri) => ({
+      label: b.label,
+      cells: this.qtyMatrix[ri].map(v => ({ value: v, style: this.cellStyle(v) })),
+    }));
+
+    const dailyBands = this.bandDefs.map((b, ri) => {
+      const v = this.qtyMatrix[ri][1];
+      const pct = Math.min(100, Math.round(v / 14 * 100));
+      return {
+        label: b.label, time: b.time,
+        countLabel: `${v} orang`,
+        barStyle: `width:${pct}%;background:${v < 2 ? '#B23A2E' : v < 8 ? '#5FB891' : '#1F6F52'};`,
+        criticalBorder: v < 2 ? 'border-left:3px solid #B23A2E;' : '',
+      };
+    });
+
+    const individualBands = this.bandDefs.map((b, ri) => ({
+      label: b.label,
+      cells: this.catMatrix[ri].map(c => {
+        if (!c) return { value: '', style: 'background:#fff;border:1px dashed #E3DED4;' };
+        const col = this.catColors[c];
+        return { value: c.slice(0, 3), style: `background:${col.bg};color:${col.fg};font-size:10.5px;` };
+      }),
+    }));
+
+    const members = this.members.map(m => ({
+      name: m.name, initials: m.initials,
+      role: 'Anggota',
+      tagLabel: m.complete ? 'Terisi' : 'Belum mengisi',
+      tagStyle: `padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700;background:${m.complete ? '#DCEEE6' : '#FBEDEA'};color:${m.complete ? '#1F6F52' : '#B23A2E'};flex-shrink:0;`,
+    }));
+
+    return {
+      screens, days, weeklyBands, dailyBands, individualBands, members,
+      isLogin: sel === 'login',
+      isOnboarding: sel === 'onboarding',
+      isGridDaily: sel === 'grid-daily',
+      isGridWeekly: sel === 'grid-weekly',
+      isGridDesktop: sel === 'grid-desktop',
+      isSheet: sel === 'sheet',
+      isJadwalSaya: sel === 'jadwal-saya',
+      isFormAktivitas: sel === 'form-aktivitas',
+      isPengecualian: sel === 'pengecualian',
+      isCari: sel === 'cari',
+      isAnggotaList: sel === 'anggota-list',
+      isAnggotaProfil: sel === 'anggota-profil',
+      isPeriode: sel === 'periode',
+      openSheet: () => this.setState({ screen: 'sheet' }),
+      openForm: () => this.setState({ screen: 'form-aktivitas' }),
+    };
+  }
+}
+</script>
+</body>
+</html>
