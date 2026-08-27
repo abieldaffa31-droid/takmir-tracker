@@ -1,12 +1,14 @@
 import "dotenv/config";
 import { eq } from "drizzle-orm";
 import { db, pool } from "../db/index.js";
-import { user } from "../db/schema/index.js";
+import { user, members } from "../db/schema/index.js";
 
-// Alat pemulihan: naikkan role akun login (bukan baris `members`) jadi admin.
-// Perlu dipakai kalau seseorang login pertama kali dengan email baru dan
-// akunnya otomatis dibuat dengan role default "member" (mis. setelah ganti
-// email pada baris members yang tadinya terhubung ke akun admin/koordinator).
+// Alat pemulihan: pasangkan ulang akun login (`user`) dengan baris `members`
+// berdasarkan email yang sama, dan naikkan role akun itu jadi admin. Perlu
+// dipakai kalau seseorang ganti email pada baris `members`-nya lalu login
+// ulang — akun `user` barunya default role "member" DAN baris `members`-nya
+// bisa saja masih menunjuk ke akun `user` lama (kalau linking sempat
+// terlewat sebelum perbaikan di invitation.service.ts).
 const email = process.argv[2];
 
 async function main() {
@@ -15,13 +17,27 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  const [updated] = await db.update(user).set({ role: "admin" }).where(eq(user.email, email)).returning();
-  if (!updated) {
+
+  const account = await db.query.user.findFirst({ where: eq(user.email, email) });
+  if (!account) {
     console.error(`Tidak ada akun login dengan email ${email}. Pastikan sudah pernah login minimal sekali.`);
     process.exitCode = 1;
     return;
   }
-  console.log(`Selesai. ${email} sekarang role-nya: ${updated.role}`);
+
+  const member = await db.query.members.findFirst({ where: eq(members.email, email) });
+  if (!member) {
+    console.error(`Tidak ada baris anggota (members) dengan email ${email}.`);
+    process.exitCode = 1;
+    return;
+  }
+
+  await db.update(user).set({ role: "admin" }).where(eq(user.id, account.id));
+  if (member.userId !== account.id) {
+    await db.update(members).set({ userId: account.id }).where(eq(members.id, member.id));
+  }
+
+  console.log(`Selesai. ${email}: role=admin, members.userId ditautkan ke akun login yang aktif sekarang.`);
 }
 
 main()
