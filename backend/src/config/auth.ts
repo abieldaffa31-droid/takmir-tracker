@@ -1,15 +1,18 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { magicLink } from "better-auth/plugins";
+import { Resend } from "resend";
 import { db } from "../db/index.js";
 import * as schema from "../db/schema/index.js";
 import { env } from "./env.js";
 import { invitationService } from "../services/invitation.service.js";
 import { memberRepo } from "../repositories/member.repo.js";
 
-// Pengiriman email di-stub: link login dicetak ke console server (dev only).
-// Ganti dengan provider nyata (Resend/SMTP) dengan menaruh kredensial di .env
-// dan menukar isi fungsi ini — tidak ada bagian lain yang perlu berubah.
+const resend = env.RESEND_API_KEY ? new Resend(env.RESEND_API_KEY) : null;
+
+// Kalau RESEND_API_KEY diisi, email beneran dikirim lewat Resend. Kalau
+// kosong, tetap di-stub ke console.log seperti sebelumnya (dev/testing) —
+// tidak ada bagian lain yang perlu berubah untuk beralih di antara keduanya.
 //
 // Pendaftaran bersifat undangan saja (Backend Plan §2.1): kalau emailnya
 // belum terdaftar sebagai `members`, link login sengaja TIDAK dikirim/dicetak
@@ -20,7 +23,28 @@ async function sendLoginEmail(email: string, url: string) {
     console.log(`\n[magic-link] Percobaan masuk dengan email belum terdaftar: ${email} (diabaikan)\n`);
     return;
   }
-  console.log(`\n[magic-link] Login untuk ${email}:\n  ${url}\n`);
+
+  if (!resend) {
+    console.log(`\n[magic-link] Login untuk ${email}:\n  ${url}\n`);
+    return;
+  }
+
+  const { error } = await resend.emails.send({
+    from: env.MAIL_FROM,
+    to: email,
+    subject: "Tautan masuk Takmir Tracker",
+    html: `
+      <div style="font-family:sans-serif;max-width:420px;margin:0 auto">
+        <h2>Jaga masjid bareng.</h2>
+        <p>Halo ${member.nickname}, klik tombol di bawah untuk masuk ke Takmir Tracker:</p>
+        <p><a href="${url}" style="display:inline-block;background:#2438FF;color:#fff;padding:14px 20px;border-radius:10px;text-decoration:none;font-weight:bold">Masuk sekarang →</a></p>
+        <p style="color:#888;font-size:13px">Tautan berlaku sekali pakai. Kalau bukan kamu yang minta, abaikan email ini.</p>
+      </div>
+    `,
+  });
+  if (error) {
+    console.error(`[magic-link] Gagal kirim email ke ${email}:`, error);
+  }
 }
 
 export const auth = betterAuth({
