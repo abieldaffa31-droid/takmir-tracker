@@ -49,6 +49,15 @@ export const auth = betterAuth({
   },
   advanced: {
     database: { generateId: () => crypto.randomUUID() },
+    // Frontend dan backend hidup di domain yang benar-benar berbeda di
+    // produksi (mis. dua subdomain *.up.railway.app terpisah — itu dua "site"
+    // berbeda untuk keperluan cookie, bukan cuma beda port seperti di lokal).
+    // SameSite=Lax default akan ditolak browser saat frontend fetch sesi ke
+    // backend lintas-domain. SameSite=None butuh Secure, jadi hanya dipakai
+    // saat produksi (HTTPS); di lokal (http://localhost) tetap Lax seperti biasa.
+    ...(env.NODE_ENV === "production"
+      ? { defaultCookieAttributes: { sameSite: "none" as const, secure: true } }
+      : {}),
   },
   databaseHooks: {
     user: {
