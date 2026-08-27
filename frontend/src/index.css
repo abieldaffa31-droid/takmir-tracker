@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+/* Token desain diambil dari Takmir Tracker GenZ.dc.html — biru/kuning, kartu
+   berbingkai tebal dengan bayangan offset, radius besar, tanpa gradien dekoratif. */
+@theme {
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
+
+  --color-ink: #0B0F2B;
+  --color-brand: #2438FF;
+  --color-brand-dark: #1a29c9;
+  --color-accent: #FFF04A;
+  --color-purple: #B14CFF;
+  --color-paper: #F7F6FF;
+  --color-paper-deep: #E8E6FF;
+  --color-surface: #FFFFFF;
+  --color-line: #b6bae0;
+  --color-muted: #4a4f75;
+  --color-muted-2: #8b90b5;
+  --color-tint-1: #DDE2FF;
+  --color-tint-2: #8E9BFF;
+  --color-tint-3: #4759FF;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper-deep);
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Kartu/kontrol bergaya "neobrutalist": bingkai 2-3px + bayangan offset padat, tanpa blur. */
+.hard-border {
+  border: 3px solid var(--color-ink);
+}
+.hard-shadow {
+  box-shadow: 4px 4px 0 var(--color-ink);
+}
+.hard-shadow-lg {
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+
+::-webkit-scrollbar { width: 0; height: 0; }
