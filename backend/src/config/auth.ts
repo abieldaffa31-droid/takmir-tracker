@@ -1,19 +1,13 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { magicLink } from "better-auth/plugins";
-import { Resend } from "resend";
 import { db } from "../db/index.js";
 import * as schema from "../db/schema/index.js";
 import { env } from "./env.js";
+import { sendEmail } from "../lib/mailer.js";
 import { invitationService } from "../services/invitation.service.js";
 import { memberRepo } from "../repositories/member.repo.js";
 
-const resend = env.RESEND_API_KEY ? new Resend(env.RESEND_API_KEY) : null;
-
-// Kalau RESEND_API_KEY diisi, email beneran dikirim lewat Resend. Kalau
-// kosong, tetap di-stub ke console.log seperti sebelumnya (dev/testing) —
-// tidak ada bagian lain yang perlu berubah untuk beralih di antara keduanya.
-//
 // Pendaftaran bersifat undangan saja (Backend Plan §2.1): kalau emailnya
 // belum terdaftar sebagai `members`, link login sengaja TIDAK dikirim/dicetak
 // — tanpa membocorkan ke pemanggil apakah emailnya valid atau tidak.
@@ -24,15 +18,10 @@ async function sendLoginEmail(email: string, url: string) {
     return;
   }
 
-  if (!resend) {
-    console.log(`\n[magic-link] Login untuk ${email}:\n  ${url}\n`);
-    return;
-  }
-
-  const { error } = await resend.emails.send({
-    from: env.MAIL_FROM,
+  await sendEmail({
     to: email,
     subject: "Tautan masuk Takmir Tracker",
+    logLabel: "magic-link",
     html: `
       <div style="font-family:sans-serif;max-width:420px;margin:0 auto">
         <h2>Jaga masjid bareng.</h2>
@@ -42,9 +31,6 @@ async function sendLoginEmail(email: string, url: string) {
       </div>
     `,
   });
-  if (error) {
-    console.error(`[magic-link] Gagal kirim email ke ${email}:`, error);
-  }
 }
 
 export const auth = betterAuth({
