@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, ApiError } from '../../lib/api'
 import { useActivePeriod } from '../../hooks/useActivePeriod'
+import { useAuth } from '../../lib/auth-context'
 import { initialsOf } from '../../lib/format'
 import { Button, Input, Sheet, Skeleton, ErrorState } from '../../components/ui'
 import { IndividualGrid } from '../grid/IndividualGrid'
@@ -14,7 +15,9 @@ export default function AnggotaProfil() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { data: period } = useActivePeriod()
+  const { role, member: self } = useAuth()
   const [notice, setNotice] = useState('')
+  const [deleting, setDeleting] = useState(false)
 
   const { data: member, isLoading } = useQuery({
     queryKey: ['members', id],
@@ -37,6 +40,23 @@ export default function AnggotaProfil() {
     if (!member) return
     await api.post(`/api/members/${id}/${member.isActive ? 'deactivate' : 'reactivate'}`)
     await queryClient.invalidateQueries({ queryKey: ['members'] })
+  }
+
+  async function handleDelete() {
+    if (!member) return
+    const sure = window.confirm(
+      `Hapus permanen "${member.fullName}"? Semua jadwal, pengecualian, dan riwayatnya ikut terhapus. Tindakan ini tidak bisa dibatalkan.`,
+    )
+    if (!sure) return
+    setDeleting(true)
+    try {
+      await api.delete(`/api/members/${id}`)
+      await queryClient.invalidateQueries({ queryKey: ['members'] })
+      navigate('/anggota')
+    } catch (e) {
+      setNotice(e instanceof ApiError ? e.message : 'Gagal menghapus anggota')
+      setDeleting(false)
+    }
   }
 
   if (isLoading || !member) {
@@ -92,13 +112,18 @@ export default function AnggotaProfil() {
         {notice && <p className="text-sm font-semibold text-brand">{notice}</p>}
       </div>
 
-      <div className="flex gap-2.5 px-5 py-5 border-t-[3px] border-ink bg-white sticky bottom-0">
+      <div className="flex gap-2.5 px-5 py-5 border-t-[3px] border-ink bg-white sticky bottom-0 flex-wrap">
         <Button variant="secondary" className="flex-1" onClick={handleResendInvite}>
           Kirim pengingat
         </Button>
         <Button variant={member.isActive ? 'danger' : 'primary'} className="flex-1" onClick={handleToggleActive}>
           {member.isActive ? 'Nonaktifkan' : 'Aktifkan'}
         </Button>
+        {role === 'admin' && self?.id !== member.id && (
+          <Button variant="danger" className="w-full" onClick={handleDelete} disabled={deleting}>
+            {deleting ? 'Menghapus…' : 'Hapus permanen'}
+          </Button>
+        )}
       </div>
 
       <EditMemberSheet open={editOpen} onClose={() => setEditOpen(false)} member={member} />

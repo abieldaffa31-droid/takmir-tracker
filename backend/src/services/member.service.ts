@@ -14,6 +14,10 @@ function assertCoordinator(actor: Actor) {
   if (!isCoordinatorLike(actor.role)) throw new ForbiddenError();
 }
 
+function assertAdmin(actor: Actor) {
+  if (actor.role !== "admin") throw new ForbiddenError("Hanya admin yang boleh menghapus anggota secara permanen");
+}
+
 async function scheduleCompletionFor(memberId: string, periodId: string) {
   const period = await periodRepo.byId(periodId);
   const activities = await activityRepo.list({ periodId, memberId });
@@ -88,6 +92,15 @@ export const memberService = {
     const active = await periodRepo.getActive();
     if (active) await availabilityService.recomputeAggregatesOnly(active.id);
     return serializeMember(actor, updated);
+  },
+
+  async remove(actor: Actor, id: string) {
+    assertAdmin(actor);
+    if (actor.memberId === id) throw new ForbiddenError("Tidak bisa menghapus akun sendiri");
+    const member = await memberRepo.byId(id);
+    if (!member) throw new NotFoundError("Anggota");
+    await memberRepo.remove(id);
+    await auditService.log(actor, "members", id, "delete", { fields: { from: member, to: null } });
   },
 
   async setCompetencies(actor: Actor, id: string, competencies: { competency: Competency; level?: string }[]) {

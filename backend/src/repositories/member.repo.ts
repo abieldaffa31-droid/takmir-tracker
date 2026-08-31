@@ -73,4 +73,6 @@ export const memberRepo = {
   },
 
   markReviewed: (id: string, tx: Tx = db) => memberRepo.update(id, { lastReviewedAt: new Date() }, tx),
+
+  remove: (id: string, tx: Tx = db) => tx.delete(members).where(eq(members.id, id)),
 };

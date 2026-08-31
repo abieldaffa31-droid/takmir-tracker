@@ -47,6 +47,16 @@ memberRoutes.patch(
   async (req, res) => res.json(ok(await memberService.update(req.actor, (req.params.id as string), req.body))),
 );
 
+memberRoutes.delete(
+  "/:id",
+  requireRole("admin"),
+  validate({ params: idParamSchema }),
+  async (req, res) => {
+    await memberService.remove(req.actor, req.params.id as string);
+    res.status(204).send();
+  },
+);
+
 memberRoutes.post(
   "/:id/deactivate",
   requireRole("coordinator", "admin"),
