@@ -22,6 +22,7 @@ async function sendLoginEmail(email: string, url: string) {
     to: email,
     subject: "Tautan masuk Takmir Tracker",
     logLabel: "magic-link",
+    url,
     html: `
       <div style="font-family:sans-serif;max-width:420px;margin:0 auto">
         <h2>Jaga masjid bareng.</h2>

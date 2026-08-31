@@ -1,7 +1,6 @@
 import crypto from "node:crypto";
 import { eq } from "drizzle-orm";
 import { env } from "../config/env.js";
-import { sendEmail } from "../lib/mailer.js";
 import { db } from "../db/index.js";
 import { user } from "../db/schema/index.js";
 import { memberRepo } from "../repositories/member.repo.js";
@@ -10,28 +9,15 @@ import type { Actor } from "../lib/types.js";
 
 const INVITE_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 hari
 
-// Undangan cuma sebuah penanda + email ajakan — sesi masuk yang sesungguhnya
-// tetap lewat magic link Better Auth begitu penerima membuka tautan ini dan
-// memasukkan emailnya di halaman login.
-async function sendInvitationEmail(email: string, fullName: string) {
-  const url = `${env.FRONTEND_URL}/masuk?email=${encodeURIComponent(email)}`;
-  await sendEmail({
-    to: email,
-    subject: "Kamu diundang ke Takmir Tracker",
-    logLabel: "undangan",
-    html: `
-      <div style="font-family:sans-serif;max-width:420px;margin:0 auto">
-        <h2>Jaga masjid bareng.</h2>
-        <p>Halo ${fullName}, kamu diundang untuk gabung ke Takmir Tracker — isi jadwalmu supaya koordinator tahu kapan kamu bisa jaga masjid.</p>
-        <p><a href="${url}" style="display:inline-block;background:#2438FF;color:#fff;padding:14px 20px;border-radius:10px;text-decoration:none;font-weight:bold">Buka undangan →</a></p>
-        <p style="color:#888;font-size:13px">Di halaman itu, masukkan email ini (${email}) untuk masuk — tanpa password.</p>
-      </div>
-    `,
-  });
-}
-
 export const invitationService = {
+  // Undangan = trigger langsung ke magic link Better Auth. Satu email, satu
+  // tautan yang begitu diklik langsung masuk — tidak ada langkah "minta
+  // tautan masuk" terpisah lagi. `auth` diimpor lazy di dalam fungsi supaya
+  // tidak bentrok dengan config/auth.ts yang mengimpor invitationService
+  // balik untuk databaseHooks (keduanya cuma dipakai saat fungsi dipanggil,
+  // bukan saat modul dimuat, jadi impor melingkar ini aman di ESM).
   async send(memberId: string, actor?: Actor) {
+    const { auth } = await import("../config/auth.js");
     const member = await memberRepo.byId(memberId);
     if (!member) throw new Error("Member tidak ditemukan");
 
@@ -43,7 +29,12 @@ export const invitationService = {
       expiresAt: new Date(Date.now() + INVITE_TTL_MS),
       invitedBy: actor?.memberId,
     });
-    await sendInvitationEmail(member.email, member.fullName);
+
+    await auth.api.signInMagicLink({
+      body: { email: member.email, callbackURL: `${env.FRONTEND_URL}/` },
+      headers: new Headers(),
+    });
+
     return { token };
   },
 
