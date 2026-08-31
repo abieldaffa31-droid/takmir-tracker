@@ -18,6 +18,11 @@ function assertAdmin(actor: Actor) {
   if (actor.role !== "admin") throw new ForbiddenError("Hanya admin yang boleh menghapus anggota secara permanen");
 }
 
+async function recomputeActivePeriodAggregates() {
+  const active = await periodRepo.getActive();
+  if (active) await availabilityService.recomputeAggregatesOnly(active.id);
+}
+
 async function scheduleCompletionFor(memberId: string, periodId: string) {
   const period = await periodRepo.byId(periodId);
   const activities = await activityRepo.list({ periodId, memberId });
@@ -64,6 +69,7 @@ export const memberService = {
     const member = await memberRepo.create({ ...input, joinedAt: new Date().toISOString().slice(0, 10) });
     await auditService.log(actor, "members", member.id, "create");
     await invitationService.send(member.id, actor);
+    await recomputeActivePeriodAggregates();
     return serializeMember(actor, member);
   },
 
@@ -80,8 +86,7 @@ export const memberService = {
     assertCoordinator(actor);
     const updated = await memberRepo.setActive(id, false);
     await auditService.log(actor, "members", id, "deactivate");
-    const active = await periodRepo.getActive();
-    if (active) await availabilityService.recomputeAggregatesOnly(active.id);
+    await recomputeActivePeriodAggregates();
     return serializeMember(actor, updated);
   },
 
@@ -89,8 +94,7 @@ export const memberService = {
     assertCoordinator(actor);
     const updated = await memberRepo.setActive(id, true);
     await auditService.log(actor, "members", id, "activate");
-    const active = await periodRepo.getActive();
-    if (active) await availabilityService.recomputeAggregatesOnly(active.id);
+    await recomputeActivePeriodAggregates();
     return serializeMember(actor, updated);
   },
 
@@ -101,6 +105,7 @@ export const memberService = {
     if (!member) throw new NotFoundError("Anggota");
     await memberRepo.remove(id);
     await auditService.log(actor, "members", id, "delete", { fields: { from: member, to: null } });
+    await recomputeActivePeriodAggregates();
   },
 
   async removeMany(actor: Actor, ids: string[]) {
@@ -116,6 +121,7 @@ export const memberService = {
       await auditService.log(actor, "members", id, "delete", { fields: { from: member, to: null } });
       deleted += 1;
     }
+    if (deleted > 0) await recomputeActivePeriodAggregates();
     return { deleted, requested: ids.length, skippedSelf };
   },
 

@@ -51,6 +51,7 @@ export default function AnggotaList() {
     try {
       await api.post('/api/members/bulk-delete', { ids: [...selectedIds] })
       await queryClient.invalidateQueries({ queryKey: ['members'] })
+      await queryClient.invalidateQueries({ queryKey: ['availability'] })
       exitSelectMode()
     } catch (e) {
       window.alert(e instanceof ApiError ? e.message : 'Gagal menghapus anggota terpilih')
@@ -168,6 +169,7 @@ function InviteSheet({ open, onClose }: { open: boolean; onClose: () => void }) 
     try {
       await api.post('/api/members', { fullName, nickname: nickname || fullName.split(' ')[0], email })
       await queryClient.invalidateQueries({ queryKey: ['members'] })
+      await queryClient.invalidateQueries({ queryKey: ['availability'] })
       setFullName('')
       setNickname('')
       setEmail('')

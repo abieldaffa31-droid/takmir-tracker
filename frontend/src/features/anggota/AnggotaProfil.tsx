@@ -40,6 +40,7 @@ export default function AnggotaProfil() {
     if (!member) return
     await api.post(`/api/members/${id}/${member.isActive ? 'deactivate' : 'reactivate'}`)
     await queryClient.invalidateQueries({ queryKey: ['members'] })
+    await queryClient.invalidateQueries({ queryKey: ['availability'] })
   }
 
   async function handleDelete() {
@@ -52,6 +53,7 @@ export default function AnggotaProfil() {
     try {
       await api.delete(`/api/members/${id}`)
       await queryClient.invalidateQueries({ queryKey: ['members'] })
+      await queryClient.invalidateQueries({ queryKey: ['availability'] })
       navigate('/anggota')
     } catch (e) {
       setNotice(e instanceof ApiError ? e.message : 'Gagal menghapus anggota')
