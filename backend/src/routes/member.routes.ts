@@ -3,6 +3,7 @@ import { requireAuth } from "../middleware/requireAuth.js";
 import { requireRole } from "../middleware/requireRole.js";
 import { validate } from "../middleware/validate.js";
 import {
+  bulkDeleteMembersSchema,
   createMemberSchema,
   idParamSchema,
   listMembersQuerySchema,
@@ -55,6 +56,13 @@ memberRoutes.delete(
     await memberService.remove(req.actor, req.params.id as string);
     res.status(204).send();
   },
+);
+
+memberRoutes.post(
+  "/bulk-delete",
+  requireRole("admin"),
+  validate({ body: bulkDeleteMembersSchema }),
+  async (req, res) => res.json(ok(await memberService.removeMany(req.actor, req.body.ids))),
 );
 
 memberRoutes.post(

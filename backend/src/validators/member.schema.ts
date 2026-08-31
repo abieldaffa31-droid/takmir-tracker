@@ -48,3 +48,7 @@ export const idParamSchema = z.object({ id: z.string().uuid() });
 export const setCompetenciesSchema = z.object({
   competencies: z.array(z.object({ competency: competencyEnum, level: z.string().optional() })),
 });
+
+export const bulkDeleteMembersSchema = z.object({
+  ids: z.array(z.string().uuid()).min(1),
+});

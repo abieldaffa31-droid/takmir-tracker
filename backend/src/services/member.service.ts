@@ -103,6 +103,22 @@ export const memberService = {
     await auditService.log(actor, "members", id, "delete", { fields: { from: member, to: null } });
   },
 
+  async removeMany(actor: Actor, ids: string[]) {
+    assertAdmin(actor);
+    const targetIds = [...new Set(ids)].filter((id) => id !== actor.memberId);
+    const skippedSelf = targetIds.length !== new Set(ids).size;
+
+    let deleted = 0;
+    for (const id of targetIds) {
+      const member = await memberRepo.byId(id);
+      if (!member) continue;
+      await memberRepo.remove(id);
+      await auditService.log(actor, "members", id, "delete", { fields: { from: member, to: null } });
+      deleted += 1;
+    }
+    return { deleted, requested: ids.length, skippedSelf };
+  },
+
   async setCompetencies(actor: Actor, id: string, competencies: { competency: Competency; level?: string }[]) {
     assertCoordinator(actor);
     return memberRepo.setCompetencies(id, competencies);
