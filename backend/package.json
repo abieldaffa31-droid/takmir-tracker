@@ -13,6 +13,7 @@
     "db:seed": "tsx src/scripts/seed.ts",
     "db:rebuild-availability": "tsx src/scripts/rebuild-availability.ts",
     "make-admin": "tsx src/scripts/promote-admin.ts",
+    "set-admin-password": "tsx src/scripts/set-admin-password.ts",
     "test": "vitest run"
   },
   "dependencies": {

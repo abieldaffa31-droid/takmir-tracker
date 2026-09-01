@@ -1,27 +1,38 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, ApiError } from '../../lib/api'
 import { useActivePeriod } from '../../hooks/useActivePeriod'
 import { useAuth } from '../../lib/auth-context'
 import { CATEGORY_LABELS, DAY_LABELS } from '../../lib/format'
 import { Button, Input, Textarea, Skeleton } from '../../components/ui'
-import type { Activity } from '../../lib/api-types'
+import type { Activity, MemberSummary } from '../../lib/api-types'
 
 const CATEGORIES = Object.keys(CATEGORY_LABELS) as (keyof typeof CATEGORY_LABELS)[]
 
 export default function FormAktivitas() {
   const { id } = useParams()
+  const [searchParams] = useSearchParams()
+  const untuk = searchParams.get('untuk') // admin/koordinator sedang atur jadwal anggota lain
   const isEdit = !!id
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { member } = useAuth()
   const { data: period } = useActivePeriod()
 
+  const targetMemberId = untuk || member?.id
+  const backTo = untuk ? `/anggota/${untuk}` : '/jadwal'
+
+  const { data: targetMember } = useQuery({
+    queryKey: ['members', untuk],
+    queryFn: () => api.get<MemberSummary>(`/api/members/${untuk}`),
+    enabled: !!untuk,
+  })
+
   const { data: existingActivities } = useQuery({
-    queryKey: ['activities', member?.id, period?.id],
-    queryFn: () => api.get<Activity[]>('/api/activities', { periodId: period!.id, memberId: member!.id }),
-    enabled: !!member && !!period,
+    queryKey: ['activities', targetMemberId, period?.id],
+    queryFn: () => api.get<Activity[]>('/api/activities', { periodId: period!.id, memberId: targetMemberId! }),
+    enabled: !!targetMemberId && !!period,
   })
   const existing = isEdit ? existingActivities?.find((a) => a.id === id) : undefined
 
@@ -51,24 +62,25 @@ export default function FormAktivitas() {
     [days, startTime, endTime],
   )
 
-  const canCheck = !!period && !!member && days.length > 0 && startTime !== endTime
+  const canCheck = !!period && !!targetMemberId && days.length > 0 && startTime !== endTime
   const { data: conflicts } = useQuery({
-    queryKey: ['activities', 'check-conflict', member?.id, period?.id, schedules, id],
+    queryKey: ['activities', 'check-conflict', targetMemberId, period?.id, schedules, id],
     queryFn: () =>
       api.post<{ withActivity: { title: string; weekday: number; startTime: string; endTime: string } }[]>(
         '/api/activities/check-conflict',
-        { periodId: period!.id, memberId: member!.id, excludeActivityId: id, schedules },
+        { periodId: period!.id, memberId: targetMemberId!, excludeActivityId: id, schedules },
       ),
     enabled: canCheck,
   })
 
   async function handleSubmit() {
-    if (!period || !member || days.length === 0) return
+    if (!period || !targetMemberId || days.length === 0) return
     setSubmitting(true)
     setSubmitError('')
     try {
       const payload = {
         periodId: period.id,
+        memberId: targetMemberId,
         category,
         title: title || CATEGORY_LABELS[category as keyof typeof CATEGORY_LABELS],
         isOutsideArea,
@@ -82,7 +94,7 @@ export default function FormAktivitas() {
       }
       await queryClient.invalidateQueries({ queryKey: ['activities'] })
       await queryClient.invalidateQueries({ queryKey: ['availability'] })
-      navigate('/jadwal')
+      navigate(backTo)
     } catch (e) {
       setSubmitError(e instanceof ApiError ? e.message : 'Gagal menyimpan jadwal')
     } finally {
@@ -97,7 +109,7 @@ export default function FormAktivitas() {
       await api.delete(`/api/activities/${id}`)
       await queryClient.invalidateQueries({ queryKey: ['activities'] })
       await queryClient.invalidateQueries({ queryKey: ['availability'] })
-      navigate('/jadwal')
+      navigate(backTo)
     } catch (e) {
       setSubmitError(e instanceof ApiError ? e.message : 'Gagal menghapus jadwal')
       setSubmitting(false)
@@ -120,6 +132,11 @@ export default function FormAktivitas() {
           ← kembali
         </button>
         <div className="text-2xl font-bold tracking-tight mt-1">{isEdit ? 'Ubah aktivitas' : 'Tambah aktivitas'}</div>
+        {untuk && (
+          <div className="font-mono text-[11px] text-brand mt-1">
+            untuk {targetMember?.fullName ?? '…'} (sebagai admin)
+          </div>
+        )}
       </div>
 
       <div className="flex-1 px-5 py-5 flex flex-col gap-4 max-w-lg mx-auto w-full">

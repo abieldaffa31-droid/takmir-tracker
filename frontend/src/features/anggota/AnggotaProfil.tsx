@@ -4,11 +4,11 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, ApiError } from '../../lib/api'
 import { useActivePeriod } from '../../hooks/useActivePeriod'
 import { useAuth } from '../../lib/auth-context'
-import { initialsOf } from '../../lib/format'
-import { Button, Input, Sheet, Skeleton, ErrorState } from '../../components/ui'
+import { CATEGORY_LABELS, CATEGORY_SWATCH, DAY_LABELS, initialsOf } from '../../lib/format'
+import { Button, Input, Sheet, Skeleton, ErrorState, EmptyState } from '../../components/ui'
 import { IndividualGrid } from '../grid/IndividualGrid'
 import { useMemberGrid } from '../../hooks/useMemberGrid'
-import type { MemberSummary } from '../../lib/api-types'
+import type { Activity, MemberSummary } from '../../lib/api-types'
 
 export default function AnggotaProfil() {
   const { id } = useParams()
@@ -25,6 +25,11 @@ export default function AnggotaProfil() {
     enabled: !!id,
   })
   const { data: grid } = useMemberGrid(id, period?.id)
+  const { data: activities, isLoading: activitiesLoading } = useQuery({
+    queryKey: ['activities', id, period?.id],
+    queryFn: () => api.get<Activity[]>('/api/activities', { periodId: period!.id, memberId: id! }),
+    enabled: !!id && !!period,
+  })
   const [editOpen, setEditOpen] = useState(false)
 
   async function handleResendInvite() {
@@ -111,6 +116,44 @@ export default function AnggotaProfil() {
         ) : (
           <ErrorState message="Belum ada periode aktif." />
         )}
+
+        <div className="flex items-center justify-between gap-3">
+          <div className="text-[15px] font-bold">Kegiatan rutin</div>
+          <Button
+            variant="secondary"
+            className="rounded-full !px-3.5 !py-2 text-[12px]"
+            onClick={() => navigate(`/jadwal/tambah?untuk=${member.id}`)}
+          >
+            + Tambah
+          </Button>
+        </div>
+
+        {activitiesLoading ? (
+          <Skeleton className="h-24 w-full" />
+        ) : activities && activities.length === 0 ? (
+          <EmptyState title="Belum ada jadwal rutin diisi." />
+        ) : (
+          <div className="flex flex-col gap-2">
+            {activities?.map((a) => (
+              <button
+                key={a.id}
+                onClick={() => navigate(`/jadwal/${a.id}/ubah?untuk=${member.id}`)}
+                className="flex items-center gap-3 rounded-2xl hard-border bg-white px-3.5 py-3 text-left"
+              >
+                <div className="h-9 w-2.5 rounded-full border-2 border-ink" style={{ background: CATEGORY_SWATCH[a.category] }} />
+                <div className="flex-1">
+                  <div className="text-[15px] font-bold">{a.title ?? CATEGORY_LABELS[a.category]}</div>
+                  <div className="font-mono text-[11px] text-muted">
+                    {a.schedules.map((s) => `${DAY_LABELS[s.weekday - 1]} ${s.startTime}–${s.endTime}`).join(', ')}
+                  </div>
+                  {a.location && <div className="font-mono text-[11px] text-muted">{a.location}</div>}
+                </div>
+                <span className="text-lg">›</span>
+              </button>
+            ))}
+          </div>
+        )}
+
         {notice && <p className="text-sm font-semibold text-brand">{notice}</p>}
       </div>
 

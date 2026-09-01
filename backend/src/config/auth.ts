@@ -39,7 +39,11 @@ export const auth = betterAuth({
   baseURL: env.BETTER_AUTH_URL,
   trustedOrigins: [env.FRONTEND_URL],
   database: drizzleAdapter(db, { provider: "pg", schema }),
-  emailAndPassword: { enabled: false },
+  // Anggota biasa tetap cuma bisa masuk lewat magic link (undangan-only).
+  // Password cuma dipasangkan manual ke akun admin lewat script
+  // set-admin-password, sebagai jalur masuk kedua yang lebih cepat —
+  // disableSignUp mencegah siapa pun mendaftar password sendiri lewat API.
+  emailAndPassword: { enabled: true, disableSignUp: true },
   plugins: [
     magicLink({
       sendMagicLink: async ({ email, url }) => sendLoginEmail(email, url),
